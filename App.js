@@ -9,21 +9,19 @@ import {
   Button,
   Alert,
   StatusBar,
-  Platform
+  Platform,
+  ImageBackground
   
 } from "react-native";
-import {  useDeviceOrientation } from "@react-native-community/hooks"
-// import imageSource from "./assets/favicon.png"
+import { useDeviceOrientation } from "@react-native-community/hooks"
+import BackgroundImage from "./app/assets/background.jpg"
+// import BackgroundImage from "/assets/background.jpg"
+// import logo from "./assets/logo-red.png"
 
 export default function App() {
-  const orientation = useDeviceOrientation();
-  console.log("app running..."); 
-  console.log("dimension = ", orientation)
+  console.log("App Running...")
   const handleButtonPress = () => {
-    //  alert("button pressed...")
-
-    // using the Alert.alert api
-    Alert.alert("alert title", "alert text content", [
+    Alert.alert("alert title name", "alert text content", [
       {
         text: "yes",
         onPress: () => alert(`yes",${StatusBar.currentHeight} ${Platform.OS}`),
@@ -33,68 +31,73 @@ export default function App() {
         onPress: () => alert(`no",${StatusBar.currentHeight} ${Platform.OS}`),
       },
     ]);
+  }
 
-    // using the Alert.prompt api
-    //prompt currently not working on android devices...
-    /*Alert.prompt("prompt title", "please enter your name", input=> console.log(input))
-    console.log("button press handled...")
-    */
-  };
   return (
-    <View style={{
-      backgroundColor: "#fff",
-      flex: 1,
-      marginTop: StatusBar.currentHeight + 10,
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      flexWrap: "wrap",
-      alignContent:"center"
-    }}>
+    
+    <View  style={styles.container}>
+      <ImageBackground style={styles.backgroundContainer} source={BackgroundImage}>
+        <View style={{ marginTop: Platform.OS === "android" && StatusBar.currentHeight + 10 }} />
+        
+        {/* logo container */}
+        <View style={styles.logoContainer}>
+          <Image source={logo} style={styles.logo} />
+          <Text> Sell What You Don,t Need </Text>
+        </View>
+        
+      </ImageBackground>
+      <View style={styles.buttonContainer}>
 
-      <View style={{
-        backgroundColor: "dodgerblue",
-        width: 100,
-        height:300,
-      }} />
+        <View style={styles.firstButton}>
+          
+        </View>
 
-      <View style={{
-        backgroundColor: "gold",
-        width: 100,
-        height:100,  
-      }} />
-      <View style={{
-        backgroundColor: "tomato",
-        width: 100,
-        height:100,
-      }} />
-      <View style={{
-        backgroundColor: "gray",
-        width: 100,
-        height:100,
-      }} />
-      <View style={{
-        backgroundColor: "pink",
-        width: 100,
-        height:100,
-      }} />
+        <View style={styles.secondButton}>
 
+        </View>
+      </View>
     </View>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    display:"flex",
-    // flex: 1,
+    flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: Platform.OS === "android" && StatusBar.currentHeight,
-
   },
   button: {
     color: "#f00",
     borderRadius: "20px",
   },
+  backgroundContainer: {
+    flex: 1,
+  },
+  logoContainer: {
+    marginTop: 20,
+    diaplay: "flex",
+    alignItems: "center"
+  },
+  logo: {
+    height: 100,
+    width: 100,
+    marginTop: 60,
+    marginBottom: 20
+  },
+  buttonContainer: {
+    bottom: 0,
+    backgroundColor: "red",
+    height: 100,
+    width: "100%"
+  },
+  firstButton: {
+    height: 50,
+    width: "100%",
+    backgroundColor: "rgb(250,80,90)"
+  },
+  secondButton: {
+    height: 50,
+    width: "100%",
+    backgroundColor: "rgb(80,180,150)"
+  }
 });
