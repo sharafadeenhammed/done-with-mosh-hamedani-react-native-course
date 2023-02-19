@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import BackgroundImage from "../assets/background.jpg"
 import logo from "../assets/logo-red.png"
+import AppButton from './AppButton';
+import { dangerColor, successColor } from "../config/colors"
 
 function WelcomeScreen() {
   return (
@@ -19,12 +21,9 @@ function WelcomeScreen() {
 
       </View>
 
-      <View style={styles.registerButton}>
-
-      </View>
-      <View style={styles.loginButton}>
-
-      </View>
+      <AppButton title="register" bgColor={dangerColor} onPress={() => console.log("register")}  />
+      <AppButton title="login" bgColor={successColor} onPress={()=>console.log("login")} />
+ 
     </ImageBackground>
   );
 }
@@ -52,22 +51,7 @@ const styles = StyleSheet.create({
     marginTop: 60,
     marginBottom: 20
   },
-  buttonContainer: {
-    bottom: 0,
-    backgroundColor: "red",
-    height: 100,
-    width: "100%"
-  },
-  registerButton: {
-    height: 50,
-    width: "100%",
-    backgroundColor: "rgb(250,80,90)"
-  },
-  loginButton: {
-    height: 50,
-    width: "100%",
-    backgroundColor: "rgb(80,180,150)"
-  }
+
 });
 
 

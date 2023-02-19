@@ -13,7 +13,7 @@ import TestScreen from "./app/screen/TestScreen.jsx";
 
 export default function App() {
   return (
-    <TestScreen/>
+    <WelcomeScreen/>
     // <ViewImageScreen/>
   );
 }

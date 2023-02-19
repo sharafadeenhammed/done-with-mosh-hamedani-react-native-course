@@ -5,3 +5,6 @@ exports.viewScreen = {
   successColor : "#4edec4",
 }
 exports.darkBg = "#202020"
+exports.dangerColor = "#ff4056"
+exports.successColor = "#4edec4"
+exports.white = "#ffffff"

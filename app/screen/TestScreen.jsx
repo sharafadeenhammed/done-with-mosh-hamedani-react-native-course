@@ -8,6 +8,10 @@ import {
   StatusBar
 } from "react-native"
 
+import {
+  MaterialCommunityIcons
+} from "@expo/vector-icons"
+
 
 import {darkBg} from "../config/colors"
 
@@ -15,7 +19,7 @@ export default function TestScreen() {
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View>
-        <Text style={styles.text}>i love react native!</Text>
+        <MaterialCommunityIcons name="email" size={50} color="dodgerblue" />
       </View>
     </SafeAreaView>
   )
@@ -54,7 +58,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "100",
     color:"green"
+  },
+  icon: {
+    
   }
-  
-
 })
