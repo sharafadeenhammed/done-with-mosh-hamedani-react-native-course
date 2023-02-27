@@ -14,15 +14,26 @@ import { dangerColor, successColor } from "../config/colors"
 
 function WelcomeScreen() {
   return (
-    <ImageBackground style={styles.backgroundContainer} source={BackgroundImage} >
+    <ImageBackground
+      style={styles.backgroundContainer}
+      source={BackgroundImage}
+      blurRadius={5}
+    >
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={logo} />
-        <Text >Sell Want You Don,t Need</Text>
+        <Text style={styles.tagLine}>Sell Want You Don,t Need</Text>
 
       </View>
-
-      <AppButton title="register" bgColor={dangerColor} onPress={() => console.log("register")}  />
-      <AppButton title="login" bgColor={successColor} onPress={()=>console.log("login")} />
+      <View style={styles.buttonContainer}>
+        <AppButton
+          title="login"
+          bgColor={dangerColor}
+          onPress={() => console.log("login")} />
+        <AppButton
+          title="register"
+          bgColor={successColor}
+          onPress={() => console.log("register")} />
+      </View>
  
     </ImageBackground>
   );
@@ -33,9 +44,7 @@ const styles = StyleSheet.create({
   backgroundContainer: {
     position:'relative',
     flex: 1,
-    justifyContent: "flex-end"
-    
-    
+    justifyContent: "flex-end",
   },
   logoContainer: {
     position: 'absolute',
@@ -51,8 +60,18 @@ const styles = StyleSheet.create({
     marginTop: 60,
     marginBottom: 20
   },
-
+  buttonContainer: {
+    width: "100%",
+    paddingHorizontal:20
+  },
+  tagLine: {
+    fontSize: 25,
+    fontWeight: "500",
+    
+  }
 });
+
+// on the 48th video...
 
 
 export default WelcomeScreen;
