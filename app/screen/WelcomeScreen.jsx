@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import BackgroundImage from "../assets/background.jpg"
 import logo from "../assets/logo-red.png"
-import AppButton from './AppButton';
+import AppButton from '../components/AppButton';
 import { dangerColor, successColor } from "../config/colors"
 
 function WelcomeScreen() {
@@ -17,13 +17,14 @@ function WelcomeScreen() {
     <ImageBackground
       style={styles.backgroundContainer}
       source={BackgroundImage}
-      blurRadius={5}
+      blurRadius={4}
     >
+      {/* //header component mounted */}
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={logo} />
-        <Text style={styles.tagLine}>Sell Want You Don,t Need</Text>
-
+        <Text style={styles.tagLine}>Sell Want You Don't Need</Text>
       </View>
+      {/* // register and login button view mountex */}
       <View style={styles.buttonContainer}>
         <AppButton
           title="login"
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   tagLine: {
     fontSize: 25,
     fontWeight: "500",
-    
+    // textDecorationLine:"underline"    
   }
 });
 

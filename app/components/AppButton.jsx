@@ -8,19 +8,11 @@ AppButton.defaultProps = {
 export default function AppButton({ bgColor, title, onPress, textColor }) {
   return (
     <TouchableOpacity
-      activeOpacity={0.5}
-      style={[
-        styles.buttton,
-        { backgroundColor: bgColor ?? darkBg }
-      ]}
+      activeOpacity={0.7}
+      style={[styles.buttton, { backgroundColor: bgColor ?? darkBg }]}
       onPress={onPress}
     >
-      <Text style={[
-        styles.text,
-        {color: textColor??white}
-      ]}>
-        {title}
-      </Text>
+      <Text style={[styles.text, { color: textColor ?? white }]}>{title}</Text>
     </TouchableOpacity>
   );
 }
@@ -34,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 10,
-    alignSelf:"center"
+    alignSelf: "center",
   },
   text: {
     fontWeight: "bold",
