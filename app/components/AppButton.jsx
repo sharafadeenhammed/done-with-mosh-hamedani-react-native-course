@@ -5,12 +5,22 @@ AppButton.defaultProps = {
   color: darkBg,
 };
 
-export default function AppButton({ bgColor, title, onPress, textColor }) {
+export default function AppButton({
+  bgColor,
+  title,
+  onPress,
+  textColor,
+  buttonAdditionalStyles,
+}) {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      style={[styles.buttton, { backgroundColor: bgColor ?? darkBg }]}
       onPress={onPress}
+      style={[
+        styles.buttton,
+        { backgroundColor: bgColor ?? darkBg },
+        buttonAdditionalStyles,
+      ]}
     >
       <Text style={[styles.text, { color: textColor ?? white }]}>{title}</Text>
     </TouchableOpacity>

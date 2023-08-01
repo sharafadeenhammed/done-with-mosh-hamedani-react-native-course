@@ -6,19 +6,19 @@ import {
   ImageComponent,
 } from "react-native";
 import AppText from "./AppText";
-import { veryLightGray, lightGray } from "../config/colors";
+import { veryLightGray, lightGray, veryLightBlue } from "../config/colors";
 
 export default function ListItem({
   image,
   title,
   description,
-  style,
+  addiotionalListStyle,
   handlePress,
   icon,
 }) {
   return (
     <TouchableHighlight onPress={handlePress} underlayColor={veryLightGray}>
-      <View style={[styles.mainContainer, style]}>
+      <View style={[styles.mainContainer, addiotionalListStyle]}>
         {icon && !image && icon()}
         {image && <Image style={styles.image} source={image} />}
         <View style={styles.detailContainer}>

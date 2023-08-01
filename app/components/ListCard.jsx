@@ -1,13 +1,19 @@
 import { View, Image, StyleSheet } from "react-native";
 import AppText from "./AppText";
+import { green } from "../config/colors";
 
-export default function ListCard({ photo, title, subTitle }) {
+export default function ListCard({
+  photo,
+  title,
+  additionalCardStyles,
+  description,
+}) {
   return (
-    <View style={styles.cardContainer}>
+    <View style={[styles.cardContainer, additionalCardStyles]}>
       <Image source={photo} style={styles.image} />
-      <View style={styles.titleContainer}>
+      <View style={styles.detailsContainer}>
         <AppText text={title} style={styles.mainTitle} />
-        <AppText text={subTitle} style={styles.subTitle}></AppText>
+        <AppText text={description} style={styles.description}></AppText>
       </View>
     </View>
   );
@@ -24,10 +30,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "hidden",
   },
-  titleContainer: {
+  detailsContainer: {
     marginTop: 20,
     width: "100%",
-    paddingHorizontal: 30,
+    paddingHorizontal: 10,
     display: "flex",
     paddingBottom: 20,
   },
@@ -35,11 +41,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textTransform: "capitalize",
     fontWeight: "600",
-    textAlign: "left",
-    marginBottom: 10,
+    marginBottom: 3,
   },
-  subTitle: {
-    fontWeight: "500",
-    color: "#16A0B5",
+  description: {
+    fontWeight: "600",
+    color: green,
+    fontSize: 17,
+    // color: "#16A0B5",
   },
 });

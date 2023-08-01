@@ -29,24 +29,6 @@ export default function MessagesScreen() {
       subTitle: "subtitle three",
       image: mosh,
     },
-    {
-      id: 4,
-      title: "title four",
-      subTitle: "subtitle four",
-      image: mosh,
-    },
-    {
-      id: 5,
-      title: "title five",
-      subTitle: "subtitle five",
-      image: mosh,
-    },
-    {
-      id: 6,
-      title: "title six",
-      subTitle: "subtitle six",
-      image: mosh,
-    },
   ];
   const [messages, setMessages] = useState(initialMessages);
   const [isRefreshing, setIsRefreshing] = useState(false);
