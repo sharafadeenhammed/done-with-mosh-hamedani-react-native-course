@@ -14,12 +14,14 @@
     "expo": "~47.0.12",
     "expo-constants": "~14.0.2",
     "expo-status-bar": "~1.4.2",
+    "formik": "^2.1.4",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.8",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-swipeout": "^2.3.6",
-    "react-native-web": "~0.18.9"
+    "react-native-web": "~0.18.9",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

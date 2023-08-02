@@ -32,6 +32,7 @@ import Screen from "./app/components/Screen.jsx";
 import AppTextInput from "./app/components/AppTextInput.jsx";
 import AppPicker from "./app/components/AppPicker.jsx";
 import AppModal from "./app/components/AppPickerLists.jsx";
+import LoginScreen from "./app/screen/LoginScreen.jsx";
 export default function App() {
   const [switchState, setSwitchState] = useState(false);
   const [modalVisibility, setModalVisibility] = useState(true);
@@ -62,36 +63,7 @@ export default function App() {
     // <MessagesScreen />
     // <AccountScreen />
     // <ListingsScreen />
-    <Screen screenAdditionalStyles={styles.container}>
-      <AppTextInput
-        textInputAdditionalStyles={styles.textInput}
-        iconName="email"
-        placeholder="Enter email"
-        clearButton="always"
-        keyboardType="text"
-        cursorColor={dark}
-      />
-      <Text>{pickerValue}</Text>
-      <Switch
-        style={styles.switch}
-        value={switchState}
-        onValueChange={(value) => setSwitchState(value)}
-      />
-      <AppPicker
-        onPress={setVisibility}
-        iconName="apps"
-        iconColor={dark}
-        placeholder={pickerValue}
-      />
-      <AppModal
-        title={"Select Listing Category"}
-        modalVisibility={modalVisibility}
-        setPickervalue={setPickerValue}
-        closeModal={setVisibility}
-        pickerValueField="value"
-        listData={listData}
-      />
-    </Screen>
+    <LoginScreen />
   );
 }
 const styles = StyleSheet.create({
