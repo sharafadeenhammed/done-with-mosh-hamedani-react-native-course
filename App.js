@@ -33,6 +33,8 @@ import AppTextInput from "./app/components/AppTextInput.jsx";
 import AppPicker from "./app/components/AppPicker.jsx";
 import AppModal from "./app/components/AppPickerLists.jsx";
 import LoginScreen from "./app/screen/LoginScreen.jsx";
+import RegisterScreen from "./app/screen/RegisterScreen.jsx";
+import AddListingScreen from "./app/screen/AddListingScreen.jsx";
 export default function App() {
   const [switchState, setSwitchState] = useState(false);
   const [modalVisibility, setModalVisibility] = useState(true);
@@ -63,7 +65,9 @@ export default function App() {
     // <MessagesScreen />
     // <AccountScreen />
     // <ListingsScreen />
-    <LoginScreen />
+    // <LoginScreen />
+    // <RegisterScreen />
+    <AddListingScreen />
   );
 }
 const styles = StyleSheet.create({

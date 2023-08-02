@@ -1,7 +1,7 @@
 import { TextInput, View, StyleSheet } from "react-native";
 
 import Icon from "./Icon";
-import { dark, lightGray, mediumDark, veryLightGray } from "../config/colors";
+import { lightGray, mediumDark, veryLightGray } from "../config/colors";
 const AppTextInput = ({
   textInputAdditionalStyles,
   secure,
@@ -15,6 +15,7 @@ const AppTextInput = ({
   iconBackgroundcolor,
   clearButton,
   cursorColor,
+  ...otherProps
 }) => {
   return (
     <View style={[styles.container, textInputAdditionalStyles]}>
@@ -35,6 +36,7 @@ const AppTextInput = ({
         keyboardType={keyboardType}
         clearButtonMode={clearButton}
         cursorColor={cursorColor}
+        {...otherProps}
       />
     </View>
   );

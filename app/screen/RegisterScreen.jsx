@@ -5,23 +5,23 @@ import * as Yup from "yup";
 
 import AppTextInput from "../components/AppTextInput";
 import Screen from "../components/Screen";
-import { blue, dark, green, veryLightBlue } from "../config/colors";
+import { blue, dark, green } from "../config/colors";
 import AppButton from "../components/AppButton";
-import AppText from "../components/AppText";
 import FalshMessage from "../components/FlashMessage";
 
 const validationScehma = Yup.object().shape({
+  name: Yup.string().trim().required().min(1).label("Name"),
   email: Yup.string().trim().required().email().label("Email"),
   password: Yup.string().required().min(6).label("Password"),
 });
-const LoginScreen = () => {
+const RegisterScreen = () => {
   return (
     <Screen screenAdditionalStyles={styles.container}>
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require("../assets/logo-red.png")} />
       </View>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ name: "", email: "", password: "" }}
         onSubmit={(values) => {
           console.log("field value:  \n", values);
         }}
@@ -30,6 +30,22 @@ const LoginScreen = () => {
         {({ handleChange, handleSubmit, errors, touched, setFieldTouched }) => {
           return (
             <>
+              <AppTextInput
+                clearButton={true}
+                cursorColor={dark}
+                inputType="text"
+                onBlur={() => setFieldTouched("name")}
+                placeholder="Name"
+                iconName="account"
+                iconBackgroundcolor="transparent"
+                iconColor={dark}
+                onChangeText={handleChange("name")}
+                textInputAdditionalStyles={styles.input}
+                keyboardType="email-adderess"
+              />
+              {touched.name && (
+                <FalshMessage type="error" message={errors.name} />
+              )}
               <AppTextInput
                 clearButton={true}
                 cursorColor={dark}
@@ -64,7 +80,7 @@ const LoginScreen = () => {
                 <FalshMessage message={errors.password} type="error" />
               )}
               <AppButton
-                title="Login"
+                title="Register"
                 bgColor={green}
                 onPress={handleSubmit}
                 buttonAdditionalStyles={styles.button}
@@ -106,4 +122,4 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-export default LoginScreen;
+export default RegisterScreen;

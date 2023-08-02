@@ -1,28 +1,36 @@
 import { mediumDark, veryLightGray } from "../config/colors";
 import AppText from "./AppText";
+import Icon from "./Icon";
 import { TouchableOpacity, StyleSheet } from "react-native";
-const PickerItem = ({ item, onPress }) => {
+
+const CatetegoryPickerItem = ({ item, onPress }) => {
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={0.7}
       onPress={onPress}
     >
+      {item.icon && (
+        <Icon
+          size={50}
+          name={item.icon}
+          backgroundColor={item.iconBackgroundColor}
+        />
+      )}
       <AppText style={styles.text} text={item.title} />
     </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
-    marginVertical: 4,
-    backgroundColor: veryLightGray,
-    borderRadius: 10,
+    width: "33%",
+    alignItems: "center",
   },
   text: {
-    fontSize: 20,
+    fontSize: 15,
     color: mediumDark,
-    padding: 5,
+    textAlign: "center",
   },
 });
-export default PickerItem;
+
+export default CatetegoryPickerItem;
