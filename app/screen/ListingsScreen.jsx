@@ -4,7 +4,13 @@ import { FlatList, StyleSheet } from "react-native";
 import Screen from "../components/Screen";
 import ListItemSeperator from "../components/ListItemSeperator";
 import ListCard from "../components/ListCard";
-import { green, veryLightBlue, white } from "../config/colors";
+import {
+  green,
+  lightGray,
+  veryLightBlue,
+  veryLightGray,
+  white,
+} from "../config/colors";
 
 const initialListings = [
   {
@@ -45,10 +51,11 @@ const ListingsScreen = () => {
 };
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: veryLightBlue,
+    backgroundColor: veryLightGray,
+    borderRadius: 10,
   },
   container: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     backgroundColor: white,
   },
   listSeperator: {
