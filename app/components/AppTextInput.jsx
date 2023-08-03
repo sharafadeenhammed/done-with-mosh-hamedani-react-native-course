@@ -1,7 +1,14 @@
 import { TextInput, View, StyleSheet } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Icon from "./Icon";
-import { lightGray, mediumDark, veryLightGray } from "../config/colors";
+import {
+  dark,
+  green,
+  lightGray,
+  mediumDark,
+  veryLightGray,
+} from "../config/colors";
 const AppTextInput = ({
   textInputAdditionalStyles,
   secure,
@@ -21,9 +28,11 @@ const AppTextInput = ({
     <View style={[styles.container, textInputAdditionalStyles]}>
       {iconName && (
         <Icon
-          backgroundColor={iconBackgroundcolor}
           name={iconName}
           color={iconColor}
+          size={40}
+          backgroundColor={iconBackgroundcolor}
+          iconAdditonalStyles={styles.icon}
         />
       )}
       <TextInput
@@ -49,16 +58,20 @@ const styles = StyleSheet.create({
     padding: 10,
     overflow: "hidden",
     backgroundColor: veryLightGray,
-    borderBottomColor: lightGray,
-    borderBottomWidth: 1,
   },
-  icon: {},
+  icon: {
+    padding: 0,
+    borderRadius: 15,
+  },
   input: {
     marginVertical: 5,
-    padding: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
     fontSize: 18,
+    width: "100%",
     paddding: 7,
     fontWeight: "500",
+    marginLeft: 10,
     color: mediumDark,
   },
 });

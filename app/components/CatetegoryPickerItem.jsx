@@ -13,6 +13,7 @@ const CatetegoryPickerItem = ({ item, onPress }) => {
       {item.icon && (
         <Icon
           size={50}
+          iconAdditonalStyles={styles.iconAdditonalStyles}
           name={item.icon}
           backgroundColor={item.iconBackgroundColor}
         />
@@ -25,11 +26,15 @@ const styles = StyleSheet.create({
   container: {
     width: "33%",
     alignItems: "center",
+    marginBottom: 15,
   },
   text: {
     fontSize: 15,
     color: mediumDark,
     textAlign: "center",
+  },
+  iconAdditonalStyles: {
+    padding: 10,
   },
 });
 

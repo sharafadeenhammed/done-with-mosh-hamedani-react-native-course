@@ -41,7 +41,7 @@ const AppPicker = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: veryLightGray,
-    padding: 15,
+    padding: 12,
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 10,
