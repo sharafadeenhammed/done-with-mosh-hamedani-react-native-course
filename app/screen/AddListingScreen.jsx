@@ -9,14 +9,12 @@ import { useState } from "react";
 
 import Screen from "../components/Screen";
 import AppButton from "../components/AppButton";
-import AppText from "../components/AppText";
+import ImagePickerList from "../components/imagepicker/ImagePickerList";
 
 import {
   blue,
-  dark,
   green,
   lightGray,
-  lightRed,
   mediumBlue,
   mediumDark,
   mediumPurple,
@@ -96,20 +94,28 @@ const validationSchema = Yup.object().shape({
   price: Yup.number().required().min(1).label("Price").min(1).max(10000),
   category: Yup.string().required().min(1).label("Category"),
   description: Yup.string().required().min(1).label("Description"),
+  photos: Yup.array().required().label("Photo"),
 });
 const AddListingScreen = () => {
   const [category, setCategory] = useState("select category");
   const [modalVibility, setModalVisility] = useState(false);
+  const [imageUris, setImageUris] = useState([]);
 
   const setVisibility = () => {
     setModalVisility((initialState) => !initialState);
   };
+
   return (
     <Screen screenAdditionalStyles={styles.container}>
-      {/* <AppText style={styles.header} text="Add New Listing" /> */}
       <Formik
         validationSchema={validationSchema}
-        initialValues={{ title: "", price: 0, category: "", description: "" }}
+        initialValues={{
+          title: "",
+          price: 0,
+          category: "",
+          description: "",
+          photos: [],
+        }}
         onSubmit={(values) => console.log(values)}
       >
         {({
@@ -120,8 +126,39 @@ const AddListingScreen = () => {
           errors,
           touched,
         }) => {
+          const pickImage = async () => {
+            const { granted } =
+              await imagePicker.requestMediaLibraryPermissionsAsync();
+            if (!granted)
+              alert(
+                "you have to allow this app to acces photo for it to work properly"
+              );
+            try {
+              const image = await imagePicker.launchImageLibraryAsync();
+              if (!image.canceled && image.assets.length > 0) {
+                setImageUris((initialState) => {
+                  const uris = [...initialState, image.assets[0]];
+                  setFieldValue("photos", uris);
+                  setFieldTouched("photos");
+                  return uris;
+                });
+                return;
+              }
+            } catch (error) {
+              console.log("error: ", error);
+            }
+          };
           return (
             <>
+              <ImagePickerList
+                items={imageUris}
+                imageSize={100}
+                handlePickImage={pickImage}
+                handleImagePress={(item) => console.log(image)}
+              />
+              {errors.photos && touched.photos && (
+                <FalshMessage type="error" message={errors.photos} />
+              )}
               <AppTextInput
                 placeholder="Title"
                 iconName="note-edit"
@@ -207,7 +244,7 @@ const AddListingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    justifyContent: "center",
+    // justifyContent: "center",
   },
   header: {
     textAlign: "center",
