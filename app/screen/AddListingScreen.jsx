@@ -6,6 +6,7 @@ import AppPicker from "../components/AppPicker";
 import AppPickerList from "../components/AppPickerLists";
 import { StyleSheet } from "react-native";
 import { useState } from "react";
+import * as imagePicker from "expo-image-picker";
 
 import Screen from "../components/Screen";
 import AppButton from "../components/AppButton";
@@ -94,7 +95,7 @@ const validationSchema = Yup.object().shape({
   price: Yup.number().required().min(1).label("Price").min(1).max(10000),
   category: Yup.string().required().min(1).label("Category"),
   description: Yup.string().required().min(1).label("Description"),
-  photos: Yup.array().required().label("Photo"),
+  photos: Yup.array().required().min(1).label("Photo"),
 });
 const AddListingScreen = () => {
   const [category, setCategory] = useState("select category");
@@ -127,11 +128,12 @@ const AddListingScreen = () => {
           touched,
         }) => {
           const pickImage = async () => {
+            setFieldTouched("photos");
             const { granted } =
               await imagePicker.requestMediaLibraryPermissionsAsync();
             if (!granted)
               alert(
-                "you have to allow this app to acces photo for it to work properly"
+                "you have to allow this acces your photos so we can select photos for your listing"
               );
             try {
               const image = await imagePicker.launchImageLibraryAsync();
@@ -139,7 +141,7 @@ const AddListingScreen = () => {
                 setImageUris((initialState) => {
                   const uris = [...initialState, image.assets[0]];
                   setFieldValue("photos", uris);
-                  setFieldTouched("photos");
+
                   return uris;
                 });
                 return;
@@ -148,17 +150,23 @@ const AddListingScreen = () => {
               console.log("error: ", error);
             }
           };
+          const removeImage = (item) => {
+            setImageUris((initialState) => {
+              return initialState.filter((photo) => item.uri !== photo.uri);
+            });
+          };
           return (
             <>
               <ImagePickerList
                 items={imageUris}
                 imageSize={100}
                 handlePickImage={pickImage}
-                handleImagePress={(item) => console.log(image)}
+                handleImagePress={(image) => removeImage(image)}
               />
-              {errors.photos && touched.photos && (
+              {console.log(errors, touched)}
+              {errors.photos && touched.photos ? (
                 <FalshMessage type="error" message={errors.photos} />
-              )}
+              ) : null}
               <AppTextInput
                 placeholder="Title"
                 iconName="note-edit"

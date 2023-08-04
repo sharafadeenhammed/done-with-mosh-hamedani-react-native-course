@@ -25,8 +25,6 @@ import Screen from "./app/components/Screen.jsx";
 import LoginScreen from "./app/screen/LoginScreen.jsx";
 import RegisterScreen from "./app/screen/RegisterScreen.jsx";
 import AddListingScreen from "./app/screen/AddListingScreen.jsx";
-import ImagePicker from "./app/components/imagepicker/ImagePicker.jsx";
-import ImagePickerList from "./app/components/imagepicker/ImagePickerList.jsx";
 export default function App() {
   const [imageUris, setImageUris] = useState([]);
   const pickImage = async () => {

@@ -14,7 +14,7 @@ const ImagePickerList = ({
     <FlatList
       numColumns={3}
       data={[...items, {}]}
-      keyExtractor={(item) => item.assetId || "10"}
+      keyExtractor={(item) => item.uri || "10"}
       renderItem={({ item }) => {
         return (
           <View style={styles.container}>
