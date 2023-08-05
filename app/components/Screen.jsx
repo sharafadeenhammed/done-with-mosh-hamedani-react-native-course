@@ -11,6 +11,6 @@ export default function Screen({ children, screenAdditionalStyles }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: (Constants.platform.android && Constants.statusBarHeight) || 0,
+    marginTop: (Constants.platform.android && Constants.statusBarHeight) || 0,
   },
 });

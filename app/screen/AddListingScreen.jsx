@@ -95,7 +95,7 @@ const validationSchema = Yup.object().shape({
   price: Yup.number().required().min(1).label("Price").min(1).max(10000),
   category: Yup.string().required().min(1).label("Category"),
   description: Yup.string().required().min(1).label("Description"),
-  photos: Yup.array().required().min(1).label("Photo"),
+  photos: Yup.array().required().min(1).max(5).label("Photos"),
 });
 const AddListingScreen = () => {
   const [category, setCategory] = useState("select category");
@@ -151,9 +151,9 @@ const AddListingScreen = () => {
             }
           };
           const removeImage = (item) => {
-            setImageUris((initialState) => {
-              return initialState.filter((photo) => item.uri !== photo.uri);
-            });
+            const data = imageUris.filter((photo) => item.uri !== photo.uri);
+            setImageUris(data);
+            setFieldValue("photos", data);
           };
           return (
             <>
@@ -199,7 +199,10 @@ const AddListingScreen = () => {
                   marginBottom: 5,
                   ...styles.picker,
                 }}
-                onPress={setVisibility}
+                onPress={() => {
+                  setVisibility();
+                  setFieldTouched("category");
+                }}
                 placeholder={category}
               />
               {errors.category && touched.category && (
