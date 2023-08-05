@@ -163,7 +163,6 @@ const AddListingScreen = () => {
                 handlePickImage={pickImage}
                 handleImagePress={(image) => removeImage(image)}
               />
-              {console.log(errors, touched)}
               {errors.photos && touched.photos ? (
                 <FalshMessage type="error" message={errors.photos} />
               ) : null}
@@ -215,9 +214,8 @@ const AddListingScreen = () => {
                 pickerValueField="value"
                 setPickedvalue={(value) => {
                   setCategory(value);
-                  handleChange("category");
-                  setFieldValue("category", value);
                   setFieldTouched("category");
+                  setFieldValue("category", value);
                 }}
                 modalVisibility={modalVibility}
               />

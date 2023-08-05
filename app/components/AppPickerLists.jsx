@@ -17,6 +17,7 @@ const AppPickerList = ({
 }) => {
   return (
     <Modal animationType="slide" visible={modalVisibility}>
+      <AppText style={styles.close} onPress={closeModal} text="close" />
       <AppText text={title || "select item category"} style={styles.title} />
       <View style={[styles.container, modalAdditionalStyles]}>
         <FlatList
@@ -52,10 +53,16 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
   },
+  close: {
+    textAlign: "center",
+    color: blue,
+    fontSize: 20,
+    marginVertical: 20,
+  },
   title: {
     fontSize: 30,
     textAlign: "center",
-    marginVertical: 30,
+    marginBottom: 10,
     color: green,
   },
 });
