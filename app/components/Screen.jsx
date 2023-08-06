@@ -1,10 +1,14 @@
-import { SafeAreaView, View, StyleSheet } from "react-native";
+import { SafeAreaView, View, StyleSheet, ScrollView } from "react-native";
 import Constants from "expo-constants";
 
 export default function Screen({ children, screenAdditionalStyles }) {
   return (
     <SafeAreaView style={[styles.container, screenAdditionalStyles]}>
-      <View>{children}</View>
+      <View>
+        <ScrollView horizontal={false} onScrollAnimationEnd={true}>
+          <View>{children}</View>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }

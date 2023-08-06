@@ -4,13 +4,14 @@ import FalshMessage from "../components/FlashMessage";
 import AppTextInput from "../components/AppTextInput";
 import AppPicker from "../components/AppPicker";
 import AppPickerList from "../components/AppPickerLists";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { useState } from "react";
 import * as imagePicker from "expo-image-picker";
 
 import Screen from "../components/Screen";
 import AppButton from "../components/AppButton";
 import ImagePickerList from "../components/imagepicker/ImagePickerList";
+import useLocation from "../hooks/useLocation";
 
 import {
   blue,
@@ -25,7 +26,7 @@ import {
   yellow,
 } from "../config/colors";
 
-const listItem = [
+const categoryList = [
   {
     id: 1,
     title: "Furniture",
@@ -95,12 +96,15 @@ const validationSchema = Yup.object().shape({
   price: Yup.number().required().min(1).label("Price").min(1).max(10000),
   category: Yup.string().required().min(1).label("Category"),
   description: Yup.string().required().min(1).label("Description"),
-  photos: Yup.array().required().min(1).max(5).label("Photos"),
+  photos: Yup.array()
+    .min(1, "select at least one photo")
+    .max(5, "You can only select up to five photos"),
 });
 const AddListingScreen = () => {
   const [category, setCategory] = useState("select category");
   const [modalVibility, setModalVisility] = useState(false);
   const [imageUris, setImageUris] = useState([]);
+  const location = useLocation();
 
   const setVisibility = () => {
     setModalVisility((initialState) => !initialState);
@@ -136,14 +140,12 @@ const AddListingScreen = () => {
                 "you have to allow this acces your photos so we can select photos for your listing"
               );
             try {
-              const image = await imagePicker.launchImageLibraryAsync();
+              const image = await imagePicker.launchImageLibraryAsync({
+                quality: 0.5,
+              });
               if (!image.canceled && image.assets.length > 0) {
-                setImageUris((initialState) => {
-                  const uris = [...initialState, image.assets[0]];
-                  setFieldValue("photos", uris);
-
-                  return uris;
-                });
+                setFieldValue("photos", [...imageUris, ...image.assets]);
+                setImageUris([...imageUris, ...image.assets]);
                 return;
               }
             } catch (error) {
@@ -151,9 +153,25 @@ const AddListingScreen = () => {
             }
           };
           const removeImage = (item) => {
-            const data = imageUris.filter((photo) => item.uri !== photo.uri);
-            setImageUris(data);
-            setFieldValue("photos", data);
+            Alert.alert(
+              "Remove Photo",
+              "are you sure you want to remove this photo",
+              [
+                {
+                  text: " Yes",
+                  onPress: () => {
+                    const data = imageUris.filter(
+                      (photo) => item.uri !== photo.uri
+                    );
+                    setImageUris(data);
+                    setFieldValue("photos", data);
+                  },
+                },
+                {
+                  text: " no",
+                },
+              ]
+            );
           };
           return (
             <>
@@ -210,7 +228,7 @@ const AddListingScreen = () => {
               )}
               <AppPickerList
                 title="select category"
-                listData={listItem}
+                listData={categoryList}
                 numofColumn={3}
                 categoryPickerItem={true}
                 closeModal={setVisibility}
