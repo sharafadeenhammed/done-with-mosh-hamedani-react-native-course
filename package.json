@@ -11,7 +11,7 @@
   "dependencies": {
     "@expo/webpack-config": "^0.17.2",
     "@react-native-community/hooks": "^3.0.0",
-    "@react-navigation/native": "^5.9.8",
+    "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "expo": "~47.0.12",
     "expo-cli": "^6.3.10",

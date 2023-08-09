@@ -25,25 +25,40 @@ import Screen from "./app/components/Screen.jsx";
 import LoginScreen from "./app/screen/LoginScreen.jsx";
 import RegisterScreen from "./app/screen/RegisterScreen.jsx";
 import AddListingScreen from "./app/screen/AddListingScreen.jsx";
-export default function App() {
-  const [imageUris, setImageUris] = useState([]);
-  const pickImage = async () => {
-    const { granted } = await imagePicker.requestMediaLibraryPermissionsAsync();
-    if (!granted)
-      alert(
-        "you have to allow this app to acces photo for it to work properly"
-      );
-    try {
-      const image = await imagePicker.launchImageLibraryAsync();
-      if (!image.canceled && image.assets.length > 0) {
-        setImageUris((initialState) => [...initialState, image.assets[0]]);
-        return;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+import AppText from "./app/components/AppText.jsx";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AppButton from "./app/components/AppButton.jsx";
 
+const Tweet = ({ navigation }) => {
+  return (
+    <Screen>
+      <AppText text="tweet" />
+      <AppButton
+        title="view tweet"
+        onPress={() => navigation.navigate("tweetDetails", { id: 10 })}
+      />
+    </Screen>
+  );
+};
+const TweetDetails = ({ route }) => {
+  console.log(route);
+  return (
+    <Screen>
+      <AppText text={`tweet details ${route.params.id} `} />
+    </Screen>
+  );
+};
+const Stack = createNativeStackNavigator();
+const StackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Tweets" component={Tweet} />
+      <Stack.Screen name="tweetDetails" component={TweetDetails} />
+    </Stack.Navigator>
+  );
+};
+export default function App() {
   return (
     // <WelcomeScreen />
     // <ViewImageScreen />
@@ -54,7 +69,10 @@ export default function App() {
     // <ListingsScreen />
     // <LoginScreen />
     // <RegisterScreen />
-    <AddListingScreen />
+    // <AddListingScreen />
+    <NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
   );
 }
 
