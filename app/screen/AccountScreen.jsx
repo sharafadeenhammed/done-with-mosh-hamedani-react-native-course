@@ -18,17 +18,16 @@ const data = [
     title: "my listing",
     icon: "format-list-bulleted",
     backgroundColor: orange,
-    // description: "showing first description",
   },
   {
     id: 2,
     title: "email",
     icon: "email",
     backgroundColor: blue,
-    // description: "showing second description",
+    route: "Messages",
   },
 ];
-const AccountScreen = () => {
+const AccountScreen = ({ navigation }) => {
   const [items, setItems] = useState(data);
   return (
     <Screen screenAdditionalStyles={styles.container}>
@@ -47,6 +46,7 @@ const AccountScreen = () => {
         keyExtractor={(message) => message.id.toString()}
         renderItem={({ item }) => (
           <ListItem
+            handlePress={() => item.route && navigation.navigate(item.route)}
             addiotionalListStyle={styles.list}
             title={item.title}
             description={item.description}

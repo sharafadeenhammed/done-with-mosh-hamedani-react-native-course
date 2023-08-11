@@ -1,4 +1,9 @@
-import { View, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from "react-native";
 import AppText from "./AppText";
 import { green } from "../config/colors";
 
@@ -7,15 +12,18 @@ export default function ListCard({
   title,
   additionalCardStyles,
   description,
+  onPress,
 }) {
   return (
-    <View style={[styles.cardContainer, additionalCardStyles]}>
-      <Image source={photo} style={styles.image} />
-      <View style={styles.detailsContainer}>
-        <AppText text={title} style={styles.mainTitle} />
-        <AppText text={description} style={styles.description}></AppText>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={[styles.cardContainer, additionalCardStyles]}>
+        <Image source={photo} style={styles.image} />
+        <View style={styles.detailsContainer}>
+          <AppText text={title} style={styles.mainTitle} />
+          <AppText text={description} style={styles.description}></AppText>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 const styles = StyleSheet.create({

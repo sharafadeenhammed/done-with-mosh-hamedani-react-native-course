@@ -6,12 +6,12 @@ const useLocation = () => {
   const getLocation = async () => {
     try {
       const { granted } = await location.requestForegroundPermissionsAsync();
-      if (granted) {
-        const {
-          coords: { latitude, longitude },
-        } = await location.getLastKnownPositionAsync();
-        setUserLocation({ longitude, latitude });
-      }
+      if (!granted)
+        throw new Error("permission to use device loaction not granted");
+      const {
+        coords: { latitude, longitude },
+      } = await location.getLastKnownPositionAsync();
+      setUserLocation({ longitude, latitude });
     } catch (error) {
       console.log(error);
     }

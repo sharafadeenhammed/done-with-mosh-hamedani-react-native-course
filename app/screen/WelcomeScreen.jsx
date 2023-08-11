@@ -10,10 +10,10 @@ import {
 import BackgroundImage from "../assets/background.jpg";
 import logo from "../assets/logo-red.png";
 import AppButton from "../components/AppButton";
-import { dangerColor, successColor } from "../config/colors";
+import { dangerColor, mediumDark, successColor } from "../config/colors";
 import AppText from "../components/AppText";
 
-function WelcomeScreen() {
+function WelcomeScreen({ navigation }) {
   return (
     <ImageBackground
       style={styles.backgroundContainer}
@@ -30,12 +30,12 @@ function WelcomeScreen() {
         <AppButton
           title="login"
           bgColor={dangerColor}
-          onPress={() => console.log("login")}
+          onPress={() => navigation.navigate("Login")}
         />
         <AppButton
           title="register"
           bgColor={successColor}
-          onPress={() => console.log("register")}
+          onPress={() => navigation.navigate("Register")}
         />
       </View>
     </ImageBackground>
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   },
   tagLine: {
     fontSize: 25,
+    color: mediumDark,
     fontWeight: "500",
   },
 });

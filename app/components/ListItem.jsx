@@ -1,12 +1,6 @@
-import {
-  View,
-  Image,
-  StyleSheet,
-  TouchableHighlight,
-  ImageComponent,
-} from "react-native";
+import { View, Image, StyleSheet, TouchableHighlight } from "react-native";
 import AppText from "./AppText";
-import { veryLightGray, lightGray, veryLightBlue } from "../config/colors";
+import { veryLightGray, lightGray } from "../config/colors";
 
 export default function ListItem({
   image,

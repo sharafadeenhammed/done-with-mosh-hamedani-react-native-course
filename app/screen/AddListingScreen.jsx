@@ -8,7 +8,7 @@ import { Alert, StyleSheet } from "react-native";
 import { useState } from "react";
 import * as imagePicker from "expo-image-picker";
 
-import Screen from "../components/Screen";
+import ScroolScreen from "../components/ScroolScreen";
 import AppButton from "../components/AppButton";
 import ImagePickerList from "../components/imagepicker/ImagePickerList";
 import useLocation from "../hooks/useLocation";
@@ -111,7 +111,7 @@ const AddListingScreen = () => {
   };
 
   return (
-    <Screen screenAdditionalStyles={styles.container}>
+    <ScroolScreen screenAdditionalStyles={styles.container}>
       <Formik
         validationSchema={validationSchema}
         initialValues={{
@@ -255,7 +255,7 @@ const AddListingScreen = () => {
               )}
 
               <AppButton
-                title="Create Listing"
+                title="Post Listing"
                 bgColor={orange}
                 onPress={handleSubmit}
                 buttonAdditionalStyles={styles.button}
@@ -264,7 +264,7 @@ const AddListingScreen = () => {
           );
         }}
       </Formik>
-    </Screen>
+    </ScroolScreen>
   );
 };
 

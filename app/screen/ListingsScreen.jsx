@@ -4,13 +4,7 @@ import { FlatList, StyleSheet } from "react-native";
 import Screen from "../components/Screen";
 import ListItemSeperator from "../components/ListItemSeperator";
 import ListCard from "../components/ListCard";
-import {
-  green,
-  lightGray,
-  veryLightBlue,
-  veryLightGray,
-  white,
-} from "../config/colors";
+import { green, veryLightGray, white } from "../config/colors";
 
 const initialListings = [
   {
@@ -26,7 +20,7 @@ const initialListings = [
     image: require("../assets/list_images/couch.jpg"),
   },
 ];
-const ListingsScreen = () => {
+const ListingsScreen = ({ navigation }) => {
   const [listings, setListings] = useState(initialListings);
   return (
     <Screen screenAdditionalStyles={styles.container}>
@@ -40,6 +34,7 @@ const ListingsScreen = () => {
             photo={item.image}
             title={item.title}
             description={`$${item.price}`}
+            onPress={() => navigation.navigate("ListingsDetails", { item })}
           />
         )}
         ItemSeparatorComponent={() => (
