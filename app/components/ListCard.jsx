@@ -7,20 +7,14 @@ import {
 import AppText from "./AppText";
 import { green } from "../config/colors";
 
-export default function ListCard({
-  photo,
-  title,
-  additionalCardStyles,
-  description,
-  onPress,
-}) {
+export default function ListCard({ item, additionalCardStyles, onPress }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={[styles.cardContainer, additionalCardStyles]}>
-        <Image source={photo} style={styles.image} />
+        <Image source={{ uri: item.images[0].url }} style={styles.image} />
         <View style={styles.detailsContainer}>
-          <AppText text={title} style={styles.mainTitle} />
-          <AppText text={description} style={styles.description}></AppText>
+          <AppText text={item.title} style={styles.mainTitle} />
+          <AppText text={`$${item.price}`} style={styles.description}></AppText>
         </View>
       </View>
     </TouchableWithoutFeedback>

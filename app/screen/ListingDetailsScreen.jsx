@@ -15,7 +15,7 @@ export default function ListingDetailsScreen({ route }) {
   return (
     <Screen screenAdditionalStyles={styles.container}>
       <View>
-        <Image style={styles.image} source={item.image} />
+        <Image style={styles.image} source={{ uri: item.images[0].url }} />
         <View style={styles.detailsContainer}>
           <AppText style={styles.title} text={item.title} />
           <AppText style={styles.price} text={`$${item.price}`} />
@@ -36,12 +36,15 @@ const styles = StyleSheet.create({
   image: {
     height: 300,
     width: "100%",
+    overflow: "hidden",
+    borderRadius: 10,
   },
   container: {
     paddingHorizontal: 10,
+    paddingTop: 10,
   },
   detailsContainer: {
-    padding: 20,
+    padding: 10,
   },
   title: {
     fontSize: 24,

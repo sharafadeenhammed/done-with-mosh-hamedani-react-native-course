@@ -1,39 +1,88 @@
-import { useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { useState, useEffect } from "react";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 
 import Screen from "../components/Screen";
 import ListItemSeperator from "../components/ListItemSeperator";
 import ListCard from "../components/ListCard";
-import { green, veryLightGray, white } from "../config/colors";
+import {
+  black,
+  green,
+  orange,
+  red,
+  veryLightGray,
+  veryLightRed,
+  white,
+} from "../config/colors";
+import listingsApi from "../api/listings";
+import AppText from "../components/AppText";
+import AppButton from "../components/AppButton";
 
-const initialListings = [
-  {
-    id: 1,
-    title: "red jacket for sale",
-    price: 100,
-    image: require("../assets/list_images/jacket.jpg"),
-  },
-  {
-    id: 2,
-    title: "couch in great condition",
-    price: 1000,
-    image: require("../assets/list_images/couch.jpg"),
-  },
-];
 const ListingsScreen = ({ navigation }) => {
-  const [listings, setListings] = useState(initialListings);
+  const [listings, setListings] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    getListings();
+  }, []);
+
+  const getListings = async () => {
+    setIsLoading(true);
+    setIsError(false);
+    const response = await listingsApi.getListings();
+    setIsError(false);
+    setIsLoading(false);
+    if (!response.ok) return setIsError(true);
+    setListings(response.data);
+  };
   return (
-    <Screen screenAdditionalStyles={styles.container}>
+    <Screen>
+      {isError && (
+        <View
+          style={{
+            ...styles.container,
+            justifyContent: "center",
+            marginTop: 100,
+            alignItems: "center",
+          }}
+        >
+          <AppText
+            style={{
+              color: red,
+              fontSize: 30,
+              backgroundColor: veryLightRed,
+              padding: 10,
+              borderRadius: 5,
+              marginBottom: 40,
+            }}
+            text="Failed to load listings"
+          />
+          <View style={{ width: "50%" }}>
+            <AppButton bgColor={orange} title="retry" onPress={getListings} />
+          </View>
+        </View>
+      )}
+      <ActivityIndicator color={black} animating={isLoading} size={40} />
       <FlatList
-        style={styles.flatList}
+        onRefresh={() => {
+          setIsRefreshing(true);
+          getListings();
+          setIsRefreshing(false);
+        }}
+        refreshing={isRefreshing}
+        style={styles.container}
         data={listings}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <ListCard
             additionalCardStyles={styles.card}
-            photo={item.image}
-            title={item.title}
-            description={`$${item.price}`}
+            item={item}
             onPress={() => navigation.navigate("ListingsDetails", { item })}
           />
         )}
