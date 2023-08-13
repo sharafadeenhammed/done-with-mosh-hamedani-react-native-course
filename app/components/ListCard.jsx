@@ -8,11 +8,13 @@ import AppText from "./AppText";
 import { green } from "../config/colors";
 
 export default function ListCard({ item, additionalCardStyles, onPress }) {
-  console.log(item.images[0].url);
+  const uri = item?.images[0]?.url
+    ? { uri: item.images[0].url }
+    : require("../assets/no-photo.jpg");
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={[styles.cardContainer, additionalCardStyles]}>
-        <Image source={{ uri: item.images[0].url }} style={styles.image} />
+        <Image source={uri} style={styles.image} />
         <View style={styles.detailsContainer}>
           <AppText text={item.title} style={styles.mainTitle} />
           <AppText text={`$${item.price}`} style={styles.description}></AppText>
