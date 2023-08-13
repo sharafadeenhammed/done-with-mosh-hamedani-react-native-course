@@ -112,8 +112,8 @@ const AddListingScreen = () => {
 
   const handleSubmit = async (formData) => {
     const response = await listingApi.addListing({ ...formData, location });
-    if (response.status >= 200 <= 299)
-      console.log("Add Listing Error: \n", response.data);
+    if (!response.ok) return alert("Failed to upload/add your listing ");
+    alert("Listing Upload sucesssful.");
   };
 
   return (
