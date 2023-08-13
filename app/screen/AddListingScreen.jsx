@@ -12,6 +12,7 @@ import ScroolScreen from "../components/ScroolScreen";
 import AppButton from "../components/AppButton";
 import ImagePickerList from "../components/imagepicker/ImagePickerList";
 import useLocation from "../hooks/useLocation";
+import listingApi from "../api/listings";
 
 import {
   blue,
@@ -105,9 +106,14 @@ const AddListingScreen = () => {
   const [modalVibility, setModalVisility] = useState(false);
   const [imageUris, setImageUris] = useState([]);
   const location = useLocation();
-
   const setVisibility = () => {
     setModalVisility((initialState) => !initialState);
+  };
+
+  const handleSubmit = async (formData) => {
+    const response = await listingApi.addListing({ ...formData, location });
+    if (response.status >= 200 <= 299)
+      console.log("Add Listing Error: \n", response.data);
   };
 
   return (
@@ -121,7 +127,7 @@ const AddListingScreen = () => {
           description: "",
           photos: [],
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => handleSubmit(values)}
       >
         {({
           setFieldTouched,

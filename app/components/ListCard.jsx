@@ -8,6 +8,7 @@ import AppText from "./AppText";
 import { green } from "../config/colors";
 
 export default function ListCard({ item, additionalCardStyles, onPress }) {
+  console.log(item.images[0].url);
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={[styles.cardContainer, additionalCardStyles]}>

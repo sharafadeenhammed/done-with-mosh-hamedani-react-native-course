@@ -1,5 +1,5 @@
 import { create } from "apisauce";
 
 export default create({
-  baseURL: "http://192.168.8.85:9000",
+  baseURL: "http://192.168.152.85:9000",
 });

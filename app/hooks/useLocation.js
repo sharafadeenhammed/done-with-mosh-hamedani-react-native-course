@@ -9,11 +9,11 @@ const useLocation = () => {
       if (!granted)
         throw new Error("permission to use device loaction not granted");
       const {
-        coords: { latitude, longitude },
+        coords: { longitude, latitude },
       } = await location.getLastKnownPositionAsync();
-      setUserLocation({ longitude, latitude });
+      setUserLocation({ latitude, longitude });
     } catch (error) {
-      console.log(error);
+      console.log("ERROR: \n", error);
     }
   };
   useEffect(() => {

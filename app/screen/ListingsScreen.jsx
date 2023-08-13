@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
     backgroundColor: white,
+    marginBottom: 70,
   },
   listSeperator: {
     backgroundColor: green,
