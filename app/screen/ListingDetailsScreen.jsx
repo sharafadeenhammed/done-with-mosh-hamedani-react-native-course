@@ -1,6 +1,6 @@
 import { View, StyleSheet, Image } from "react-native";
 
-import { green } from "../config/colors";
+import { green, mediumDark } from "../config/colors";
 import AppText from "../components/AppText";
 
 import ListItem from "../components/ListItem";
@@ -22,6 +22,7 @@ export default function ListingDetailsScreen({ route }) {
         <View style={styles.detailsContainer}>
           <AppText style={styles.title} text={item.title} />
           <AppText style={styles.price} text={`$${item.price}`} />
+          <AppText style={styles.description} text={item.description} />
           <View style={styles.userContainer}>
             <ListItem
               image={mosh}
@@ -49,9 +50,16 @@ const styles = StyleSheet.create({
   detailsContainer: {
     padding: 10,
   },
+  description: {
+    fontSize: 25,
+    marginTop: 20,
+    textAlign: "left",
+    color: mediumDark,
+  },
   title: {
     fontSize: 24,
     fontWeight: "600",
+    color: mediumDark,
   },
   price: {
     marginTop: 10,

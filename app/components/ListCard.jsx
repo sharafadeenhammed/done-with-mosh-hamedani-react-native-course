@@ -5,7 +5,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import AppText from "./AppText";
-import { green } from "../config/colors";
+import { green, white } from "../config/colors";
 
 export default function ListCard({ item, additionalCardStyles, onPress }) {
   const uri = item?.images[0]?.url
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: "100%",
     marginBottom: 20,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: white,
     borderRadius: 20,
     overflow: "hidden",
   },

@@ -1,27 +1,20 @@
 import { useState, useEffect } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator,
-} from "react-native";
-
+import { FlatList, StyleSheet, View } from "react-native";
 import Screen from "../components/Screen";
 import ListItemSeperator from "../components/ListItemSeperator";
 import ListCard from "../components/ListCard";
 import {
-  black,
   green,
   orange,
   red,
+  veryLightBlue,
   veryLightGray,
   veryLightRed,
-  white,
 } from "../config/colors";
 import listingsApi from "../api/listings";
 import AppText from "../components/AppText";
 import AppButton from "../components/AppButton";
+import ActivityIndicator from "../components/animations/ActivityIndicator";
 
 const ListingsScreen = ({ navigation }) => {
   const [listings, setListings] = useState([]);
@@ -29,6 +22,7 @@ const ListingsScreen = ({ navigation }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     getListings();
   }, []);
 
@@ -36,7 +30,6 @@ const ListingsScreen = ({ navigation }) => {
     setIsLoading(true);
     setIsError(false);
     const response = await listingsApi.getListings();
-    setIsError(false);
     setIsLoading(false);
     if (!response.ok) return setIsError(true);
     setListings(response.data);
@@ -68,7 +61,8 @@ const ListingsScreen = ({ navigation }) => {
           </View>
         </View>
       )}
-      <ActivityIndicator color={black} animating={isLoading} size={40} />
+      {/* <ActivityIndicator color={black} animating={isLoading} size={40} /> */}
+      {isLoading && <ActivityIndicator animate={isLoading} />}
       <FlatList
         onRefresh={() => {
           setIsRefreshing(true);
@@ -95,12 +89,12 @@ const ListingsScreen = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: veryLightGray,
+    backgroundColor: veryLightBlue,
     borderRadius: 10,
   },
   container: {
     paddingHorizontal: 15,
-    backgroundColor: white,
+    backgroundColor: veryLightGray,
     marginBottom: 70,
   },
   listSeperator: {

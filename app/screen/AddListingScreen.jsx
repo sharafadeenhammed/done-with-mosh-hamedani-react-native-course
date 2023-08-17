@@ -4,7 +4,7 @@ import FalshMessage from "../components/FlashMessage";
 import AppTextInput from "../components/AppTextInput";
 import AppPicker from "../components/AppPicker";
 import AppPickerList from "../components/AppPickerLists";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, Modal, Text, Button } from "react-native";
 import { useState } from "react";
 import * as imagePicker from "expo-image-picker";
 
@@ -24,6 +24,7 @@ import {
   orange,
   purple,
   red,
+  white,
   yellow,
 } from "../config/colors";
 
@@ -101,23 +102,43 @@ const validationSchema = Yup.object().shape({
     .min(1, "select at least one photo")
     .max(5, "You can only select up to five photos"),
 });
+
 const AddListingScreen = () => {
   const [category, setCategory] = useState("select category");
   const [modalVibility, setModalVisility] = useState(false);
+  const [progressModalVisibility, setProgressModalVisibility] = useState(false);
+  const [uploadPercentage, setUploadPercentage] = useState(0);
   const [imageUris, setImageUris] = useState([]);
   const location = useLocation();
   const setVisibility = () => {
     setModalVisility((initialState) => !initialState);
   };
-
+  const handleOnUpload = (progress) => {
+    setUploadPercentage(progress.loaded / progress.total);
+  };
   const handleSubmit = async (formData) => {
-    const response = await listingApi.addListing({ ...formData, location });
-    if (!response.ok) return alert("Failed to upload/add your listing ");
+    setProgressModalVisibility(true);
+    const response = await listingApi.addListing(
+      { ...formData, location },
+      handleOnUpload
+    );
+    setProgressModalVisibility(false);
+    if (!response.ok) {
+      console.log(response.data);
+      return alert("Failed to upload/add your listing ");
+    }
     alert("Listing Upload sucesssful.");
   };
 
   return (
     <ScroolScreen screenAdditionalStyles={styles.container}>
+      <Modal visible={progressModalVisibility}>
+        <Text style={{ textAlign: "center" }}> {uploadPercentage * 100}% </Text>
+        <Button
+          title="close"
+          onPress={() => setProgressModalVisibility(false)}
+        />
+      </Modal>
       <Formik
         validationSchema={validationSchema}
         initialValues={{
@@ -194,7 +215,8 @@ const AddListingScreen = () => {
                 placeholder="Title"
                 iconName="note-edit"
                 iconBackgroundcolor={mediumPurple}
-                textInputAdditionalStyles={styles.input}
+                textInputAdditionalStyles={styles.inputContainer}
+                inputStyles={styles.input}
                 onChangeText={handleChange("title")}
                 onBlur={() => setFieldTouched("title")}
               />
@@ -206,7 +228,11 @@ const AddListingScreen = () => {
                 iconName="cash"
                 iconBackgroundcolor={green}
                 placeholder="Price"
-                textInputAdditionalStyles={{ ...styles.input, width: "50%" }}
+                textInputAdditionalStyles={{
+                  ...styles.inputContainer,
+                  width: "50%",
+                }}
+                inputStyles={{ ...styles.input, width: 125 }}
                 onChangeText={handleChange("price")}
                 keyboardType="numeric"
                 onBlur={() => setFieldTouched("price")}
@@ -251,7 +277,8 @@ const AddListingScreen = () => {
                 iconName="book-edit"
                 iconBackgroundcolor={mediumDark}
                 placeholder="Description"
-                textInputAdditionalStyles={styles.input}
+                textInputAdditionalStyles={styles.inputContainer}
+                inputStyles={styles.input}
                 onChangeText={handleChange("description")}
                 onBlur={() => setFieldTouched("description")}
                 multiline
@@ -287,6 +314,12 @@ const styles = StyleSheet.create({
     color: green,
   },
   input: {
+    backgroundColor: white,
+    borderRadius: 5,
+    width: "89%",
+    paddingHorizontal: 5,
+  },
+  inputContainer: {
     padding: 10,
     borderBottomColor: "transparent",
     marginVertical: 10,

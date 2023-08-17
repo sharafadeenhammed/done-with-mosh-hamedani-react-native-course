@@ -30,7 +30,7 @@ const AppTextInput = ({
         <Icon
           name={iconName}
           color={iconColor}
-          size={40}
+          size={30}
           backgroundColor={iconBackgroundcolor}
           iconAdditonalStyles={styles.icon}
         />
@@ -45,6 +45,7 @@ const AppTextInput = ({
         keyboardType={keyboardType}
         clearButtonMode={clearButton}
         cursorColor={cursorColor}
+        verticalAlign={"top"}
         {...otherProps}
       />
     </View>
@@ -54,19 +55,17 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
+    padding: 5,
     overflow: "hidden",
     backgroundColor: veryLightGray,
   },
   icon: {
     padding: 0,
     borderRadius: 15,
+    marginTop: 10,
   },
   input: {
-    marginVertical: 5,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingVertical: 10,
     fontSize: 18,
     width: "100%",
     paddding: 7,
