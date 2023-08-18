@@ -17,7 +17,7 @@ const addListing = (listing, handleOnProgress) => {
   const querryString = new URLSearchParams("");
   querryString.append("title", title);
   querryString.append("price", price);
-  querryString.append("categoryId", category);
+  querryString.append("categoryId", category.value);
   querryString.append("description", description);
 
   if (!location.longitude)
@@ -27,7 +27,7 @@ const addListing = (listing, handleOnProgress) => {
     title,
     price,
     images,
-    categoryId: category,
+    categoryId: category.value,
     description,
     location,
   };

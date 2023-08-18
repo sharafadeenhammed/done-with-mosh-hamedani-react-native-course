@@ -2,15 +2,15 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import ImagePicker from "./ImagePicker";
 import ImageItem from "./ImageItem";
 import { useRef } from "react";
+import { useFormikContext } from "formik";
 
 const ImagePickerList = ({
-  items = [],
   imageSize = 100,
   handlePickImage,
   handleImagePress,
 }) => {
+  const { values, setFieldValue } = useFormikContext();
   const scroolView = useRef();
-  items = [...items, {}];
   return (
     <View style={styles.container}>
       <ScrollView
@@ -21,7 +21,7 @@ const ImagePickerList = ({
           scroolView.current.scrollToEnd({ animated: true })
         }
       >
-        {items.map((item, index) => (
+        {[...values.photos, {}].map((item, index) => (
           <View key={index.toString() || "10"} style={styles.ImageContainer}>
             {item?.uri ? (
               <ImageItem

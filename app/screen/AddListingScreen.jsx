@@ -4,7 +4,7 @@ import FalshMessage from "../components/FlashMessage";
 import AppTextInput from "../components/AppTextInput";
 import AppPicker from "../components/AppPicker";
 import AppPickerList from "../components/AppPickerLists";
-import { Alert, StyleSheet, Modal, Text, Button } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { useState } from "react";
 import * as imagePicker from "expo-image-picker";
 
@@ -27,6 +27,7 @@ import {
   white,
   yellow,
 } from "../config/colors";
+import UploadScreen from "../components/UploadScreen";
 
 const categoryList = [
   {
@@ -96,7 +97,7 @@ const categoryList = [
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(3).label("Title"),
   price: Yup.number().required().min(1).label("Price").min(1).max(10000),
-  category: Yup.string().required().min(1).label("Category"),
+  category: Yup.object().required().label("Category"),
   description: Yup.string().required().min(1).label("Description"),
   photos: Yup.array()
     .min(1, "select at least one photo")
@@ -104,41 +105,45 @@ const validationSchema = Yup.object().shape({
 });
 
 const AddListingScreen = () => {
-  const [category, setCategory] = useState("select category");
   const [modalVibility, setModalVisility] = useState(false);
   const [progressModalVisibility, setProgressModalVisibility] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState(0);
-  const [imageUris, setImageUris] = useState([]);
   const location = useLocation();
+
   const setVisibility = () => {
+    // this function sets the category picker modal visibility
     setModalVisility((initialState) => !initialState);
   };
+
   const handleOnUpload = (progress) => {
+    // this function sets the upload progresss during data upload
     setUploadPercentage(progress.loaded / progress.total);
   };
+
   const handleSubmit = async (formData) => {
+    //  this function handle the listing upload
+    setUploadPercentage(0);
     setProgressModalVisibility(true);
     const response = await listingApi.addListing(
       { ...formData, location },
       handleOnUpload
     );
-    setProgressModalVisibility(false);
+    // setProgressModalVisibility(false);
+
     if (!response.ok) {
+      setProgressModalVisibility(false);
       console.log(response.data);
       return alert("Failed to upload/add your listing ");
     }
-    alert("Listing Upload sucesssful.");
   };
 
   return (
     <ScroolScreen screenAdditionalStyles={styles.container}>
-      <Modal visible={progressModalVisibility}>
-        <Text style={{ textAlign: "center" }}> {uploadPercentage * 100}% </Text>
-        <Button
-          title="close"
-          onPress={() => setProgressModalVisibility(false)}
-        />
-      </Modal>
+      <UploadScreen
+        visible={progressModalVisibility}
+        progress={uploadPercentage}
+        closeModalVisibility={() => setProgressModalVisibility(false)}
+      />
       <Formik
         validationSchema={validationSchema}
         initialValues={{
@@ -157,28 +162,34 @@ const AddListingScreen = () => {
           setFieldValue,
           errors,
           touched,
+          values,
         }) => {
           const pickImage = async () => {
-            setFieldTouched("photos");
-            const { granted } =
+            setFieldTouched("photos"); // set field touched state \
+
+            const {
+              granted,
+            } = // ask for user permission to access photos
               await imagePicker.requestMediaLibraryPermissionsAsync();
             if (!granted)
-              alert(
+              return alert(
                 "you have to allow this acces your photos so we can select photos for your listing"
               );
+
+            //  open images for user to pick from
             try {
               const image = await imagePicker.launchImageLibraryAsync({
                 quality: 0.5,
               });
               if (!image.canceled && image.assets.length > 0) {
-                setFieldValue("photos", [...imageUris, ...image.assets]);
-                setImageUris([...imageUris, ...image.assets]);
+                setFieldValue("photos", [...values.photos, ...image.assets]);
                 return;
               }
             } catch (error) {
               console.log("error: ", error);
             }
           };
+
           const removeImage = (item) => {
             Alert.alert(
               "Remove Photo",
@@ -187,11 +198,10 @@ const AddListingScreen = () => {
                 {
                   text: " Yes",
                   onPress: () => {
-                    const data = imageUris.filter(
-                      (photo) => item.uri !== photo.uri
+                    setFieldValue(
+                      "photos",
+                      values.photos.filter((photo) => item.uri !== photo.uri)
                     );
-                    setImageUris(data);
-                    setFieldValue("photos", data);
                   },
                 },
                 {
@@ -203,7 +213,6 @@ const AddListingScreen = () => {
           return (
             <>
               <ImagePickerList
-                items={imageUris}
                 imageSize={100}
                 handlePickImage={pickImage}
                 handleImagePress={(image) => removeImage(image)}
@@ -245,15 +254,13 @@ const AddListingScreen = () => {
                 iconName="apps"
                 iconColor={blue}
                 pickerAdditionalStyles={{
-                  width: "90%",
-                  marginBottom: 5,
                   ...styles.picker,
                 }}
                 onPress={() => {
                   setVisibility();
                   setFieldTouched("category");
                 }}
-                placeholder={category}
+                placeholder={values.category.title}
               />
               {errors.category && touched.category && (
                 <FalshMessage type="error" message={errors.category} />
@@ -266,7 +273,6 @@ const AddListingScreen = () => {
                 closeModal={setVisibility}
                 pickerValueField="value"
                 setPickedvalue={(value) => {
-                  setCategory(value);
                   setFieldTouched("category");
                   setFieldValue("category", value);
                 }}
@@ -343,6 +349,8 @@ const styles = StyleSheet.create({
   },
   picker: {
     marginTop: 10,
+    width: "90%",
+    marginBottom: 5,
   },
 });
 export default AddListingScreen;

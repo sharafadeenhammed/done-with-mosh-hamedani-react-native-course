@@ -4,7 +4,6 @@ import Screen from "../components/Screen";
 import ListItemSeperator from "../components/ListItemSeperator";
 import ListCard from "../components/ListCard";
 import {
-  green,
   orange,
   red,
   veryLightBlue,
@@ -14,7 +13,7 @@ import {
 import listingsApi from "../api/listings";
 import AppText from "../components/AppText";
 import AppButton from "../components/AppButton";
-import ActivityIndicator from "../components/animations/ActivityIndicator";
+import AppActivityIndicator from "../components/animations/ActivityIndicator";
 
 const ListingsScreen = ({ navigation }) => {
   const [listings, setListings] = useState([]);
@@ -62,7 +61,7 @@ const ListingsScreen = ({ navigation }) => {
         </View>
       )}
       {/* <ActivityIndicator color={black} animating={isLoading} size={40} /> */}
-      {isLoading && <ActivityIndicator animate={isLoading} />}
+      {isLoading && <AppActivityIndicator animate={isLoading} />}
       <FlatList
         onRefresh={() => {
           setIsRefreshing(true);
@@ -80,9 +79,7 @@ const ListingsScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("ListingsDetails", { item })}
           />
         )}
-        ItemSeparatorComponent={() => (
-          <ListItemSeperator additionalSeperatorStyles={styles.listSeperator} />
-        )}
+        ItemSeparatorComponent={() => <ListItemSeperator />}
       />
     </Screen>
   );
@@ -95,10 +92,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
     backgroundColor: veryLightGray,
-    marginBottom: 70,
-  },
-  listSeperator: {
-    backgroundColor: green,
+    marginBottom: 5,
   },
 });
 export default ListingsScreen;

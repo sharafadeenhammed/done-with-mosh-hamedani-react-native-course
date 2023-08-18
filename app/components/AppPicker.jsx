@@ -25,7 +25,10 @@ const AppPicker = ({
               color={iconColor}
             />
           )}
-          <AppText style={styles.text} text={placeholder || "Phones"} />
+          <AppText
+            style={styles.text}
+            text={placeholder || "Select Category"}
+          />
         </View>
 
         <MaterialCommunityIcons

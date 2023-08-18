@@ -29,7 +29,7 @@ const AppPickerList = ({
               <CatetegoryPickerItem
                 item={item}
                 onPress={() => {
-                  setPickedvalue(item[pickerValueField]);
+                  setPickedvalue(item);
                   closeModal();
                 }}
               />
