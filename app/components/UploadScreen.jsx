@@ -7,7 +7,6 @@ const UploadScreen = ({
   visible = false,
   closeModalVisibility,
 }) => {
-  if (progress == 1) closeModalVisibility();
   return (
     <Modal visible={visible}>
       <View style={styles.container}>
@@ -17,7 +16,7 @@ const UploadScreen = ({
           <>
             <LottieView
               autoSize={true}
-              // style={styles.done}
+              onAnimationFinish={closeModalVisibility}
               source={require("../animations/done.json")}
               autoPlay={true}
               loop={false}
