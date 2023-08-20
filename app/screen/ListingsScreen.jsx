@@ -22,7 +22,6 @@ const ListingsScreen = ({ navigation }) => {
   useEffect(() => {
     getListings();
   }, []);
-
   const getListings = async () => {
     await getListingsApi.request();
   };
@@ -54,7 +53,9 @@ const ListingsScreen = ({ navigation }) => {
         </View>
       )}
       {/* <ActivityIndicator color={black} animating={isLoading} size={40} /> */}
-      <AppActivityIndicator animate={getListingsApi.isLodading} />
+      {getListingsApi.isLodading && (
+        <AppActivityIndicator animate={getListingsApi.isLodading} />
+      )}
       <FlatList
         onRefresh={() => {
           setIsRefreshing(true);
