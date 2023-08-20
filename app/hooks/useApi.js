@@ -4,10 +4,10 @@ const useApi = (apiCall) => {
   const [isLodading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const request = async () => {
+  const request = async (...args) => {
     setIsLoading(true);
     setIsError(false);
-    const response = await apiCall();
+    const response = await apiCall(...args);
     setIsLoading(false);
     if (!response.ok) return setIsError(true);
     setData(response.data);

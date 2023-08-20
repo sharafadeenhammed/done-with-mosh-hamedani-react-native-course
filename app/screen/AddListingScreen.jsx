@@ -28,6 +28,7 @@ import {
   yellow,
 } from "../config/colors";
 import UploadScreen from "../components/UploadScreen";
+import useApi from "../hooks/useApi";
 
 const categoryList = [
   {
@@ -108,9 +109,8 @@ const AddListingScreen = () => {
   const [modalVibility, setModalVisility] = useState(false);
   const [progressModalVisibility, setProgressModalVisibility] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState(0);
-  const [submitted, setSubmitted] = useState("");
   const location = useLocation();
-  useEffect(() => console.log("...rendering screen..."), [submitted]);
+  const addListingApi = useApi(listingApi.addListing);
 
   const setVisibility = () => {
     // this function sets the category picker modal visibility
@@ -122,30 +122,31 @@ const AddListingScreen = () => {
     setUploadPercentage(progress.loaded / progress.total);
   };
 
-  const handleSubmit = async (formData, resetForm, setFieldValue) => {
+  const handleSubmit = async (formData, resetForm) => {
     //  this function handle the listing upload
-    setSubmitted("submitting");
     setUploadPercentage(0);
     setProgressModalVisibility(true);
-    const response = await listingApi.addListing(
+    const response = await addListingApi.request(
       { ...formData, location },
       handleOnUpload
     );
 
-    if (!response.ok) {
+    if (addListingApi.isError) {
       setProgressModalVisibility(false);
       console.log(response.data);
       return alert("Failed to upload/add your listing ");
     }
     resetForm();
-    setSubmitted("form submitted");
   };
 
   return (
     <ScroolScreen screenAdditionalStyles={styles.container}>
       <UploadScreen
         progress={uploadPercentage}
-        closeModalVisibility={() => setProgressModalVisibility(false)}
+        visible={progressModalVisibility}
+        closeModalVisibility={() =>
+          setTimeout(() => setProgressModalVisibility(false), 2000)
+        }
       />
       <Formik
         validationSchema={validationSchema}
@@ -158,7 +159,7 @@ const AddListingScreen = () => {
           photos: [],
         }}
         onSubmit={(values, { resetForm, setFieldValue }) =>
-          handleSubmit(values, resetForm, setFieldValue)
+          handleSubmit(values, resetForm)
         }
       >
         {({

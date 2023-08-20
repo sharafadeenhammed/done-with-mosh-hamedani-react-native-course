@@ -8,6 +8,7 @@ const UploadScreen = ({
   visible = false,
   closeModalVisibility,
 }) => {
+  if (progress == 1) closeModalVisibility();
   return (
     <Modal visible={visible}>
       <View style={styles.container}>
@@ -21,12 +22,6 @@ const UploadScreen = ({
               source={require("../animations/done.json")}
               autoPlay={true}
               loop={false}
-            />
-            <AppButton
-              bgColor={orange}
-              buttonAdditionalStyles={styles.button}
-              title={"close"}
-              onPress={closeModalVisibility}
             />
           </>
         )}
