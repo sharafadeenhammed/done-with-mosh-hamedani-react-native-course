@@ -235,6 +235,7 @@ const AddListingScreen = () => {
                 inputStyles={styles.input}
                 onChangeText={handleChange("title")}
                 onBlur={() => setFieldTouched("title")}
+                value={values.title}
               />
               {errors.title && touched.title && (
                 <FalshMessage type="error" message={errors.title} />
@@ -252,6 +253,7 @@ const AddListingScreen = () => {
                 onChangeText={handleChange("price")}
                 keyboardType="numeric"
                 onBlur={() => setFieldTouched("price")}
+                value={values.price}
               />
               {errors.price && touched.price && (
                 <FalshMessage type="error" message={errors.price} />
@@ -295,6 +297,7 @@ const AddListingScreen = () => {
                 onChangeText={handleChange("description")}
                 onBlur={() => setFieldTouched("description")}
                 multiline
+                value={values.description}
               />
               {errors.description && touched.description && (
                 <FalshMessage type="error" message={errors.description} />
