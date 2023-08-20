@@ -14,28 +14,21 @@ import listingsApi from "../api/listings";
 import AppText from "../components/AppText";
 import AppButton from "../components/AppButton";
 import AppActivityIndicator from "../components/animations/ActivityIndicator";
+import useApi from "../hooks/useApi";
 
 const ListingsScreen = ({ navigation }) => {
-  const [listings, setListings] = useState([]);
-  const [isError, setIsError] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const getListingsApi = useApi(listingsApi.getListings);
   useEffect(() => {
-    setIsLoading(true);
     getListings();
   }, []);
 
   const getListings = async () => {
-    setIsLoading(true);
-    setIsError(false);
-    const response = await listingsApi.getListings();
-    setIsLoading(false);
-    if (!response.ok) return setIsError(true);
-    setListings(response.data);
+    await getListingsApi.request();
   };
   return (
     <Screen>
-      {isError && (
+      {getListingsApi.isError && (
         <View
           style={{
             ...styles.container,
@@ -61,7 +54,7 @@ const ListingsScreen = ({ navigation }) => {
         </View>
       )}
       {/* <ActivityIndicator color={black} animating={isLoading} size={40} /> */}
-      {isLoading && <AppActivityIndicator animate={isLoading} />}
+      <AppActivityIndicator animate={getListingsApi.isLodading} />
       <FlatList
         onRefresh={() => {
           setIsRefreshing(true);
@@ -70,7 +63,7 @@ const ListingsScreen = ({ navigation }) => {
         }}
         refreshing={isRefreshing}
         style={styles.container}
-        data={listings}
+        data={getListingsApi.data}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <ListCard

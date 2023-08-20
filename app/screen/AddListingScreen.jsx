@@ -5,7 +5,7 @@ import AppTextInput from "../components/AppTextInput";
 import AppPicker from "../components/AppPicker";
 import AppPickerList from "../components/AppPickerLists";
 import { Alert, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as imagePicker from "expo-image-picker";
 
 import ScroolScreen from "../components/ScroolScreen";
@@ -108,7 +108,9 @@ const AddListingScreen = () => {
   const [modalVibility, setModalVisility] = useState(false);
   const [progressModalVisibility, setProgressModalVisibility] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [submitted, setSubmitted] = useState("");
   const location = useLocation();
+  useEffect(() => console.log("...rendering screen..."), [submitted]);
 
   const setVisibility = () => {
     // this function sets the category picker modal visibility
@@ -120,32 +122,34 @@ const AddListingScreen = () => {
     setUploadPercentage(progress.loaded / progress.total);
   };
 
-  const handleSubmit = async (formData) => {
+  const handleSubmit = async (formData, resetForm, setFieldValue) => {
     //  this function handle the listing upload
+    setSubmitted("submitting");
     setUploadPercentage(0);
     setProgressModalVisibility(true);
     const response = await listingApi.addListing(
       { ...formData, location },
       handleOnUpload
     );
-    // setProgressModalVisibility(false);
 
     if (!response.ok) {
       setProgressModalVisibility(false);
       console.log(response.data);
       return alert("Failed to upload/add your listing ");
     }
+    resetForm();
+    setSubmitted("form submitted");
   };
 
   return (
     <ScroolScreen screenAdditionalStyles={styles.container}>
       <UploadScreen
-        visible={progressModalVisibility}
         progress={uploadPercentage}
         closeModalVisibility={() => setProgressModalVisibility(false)}
       />
       <Formik
         validationSchema={validationSchema}
+        enableReinitialize={true}
         initialValues={{
           title: "",
           price: 0,
@@ -153,7 +157,9 @@ const AddListingScreen = () => {
           description: "",
           photos: [],
         }}
-        onSubmit={(values) => handleSubmit(values)}
+        onSubmit={(values, { resetForm, setFieldValue }) =>
+          handleSubmit(values, resetForm, setFieldValue)
+        }
       >
         {({
           setFieldTouched,

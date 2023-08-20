@@ -3,15 +3,11 @@ import LottieView from "lottie-react-native";
 const loader = require("../../animations/loader.json");
 
 const ActivityIndicator = (animate = false) => {
-  return (
+  return animate ? (
     <View style={styles.container}>
-      {animate ? (
-        <LottieView source={loader} autoPlay={true} loop={true} />
-      ) : (
-        false
-      )}
+      <LottieView source={loader} autoPlay={true} loop={true} />
     </View>
-  );
+  ) : null;
 };
 
 export default ActivityIndicator;
