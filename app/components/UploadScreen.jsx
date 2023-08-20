@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, Modal } from "react-native";
 import * as Progress from "react-native-progress";
 import { orange } from "../config/colors";
 import LottieView from "lottie-react-native";
-import AppButton from "./AppButton";
 const UploadScreen = ({
   progress = 0,
   visible = false,
