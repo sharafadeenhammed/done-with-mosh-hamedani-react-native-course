@@ -56,25 +56,27 @@ const ListingsScreen = ({ navigation }) => {
       {getListingsApi.isLodading && (
         <AppActivityIndicator animate={getListingsApi.isLodading} />
       )}
-      <FlatList
-        onRefresh={() => {
-          setIsRefreshing(true);
-          getListings();
-          setIsRefreshing(false);
-        }}
-        refreshing={isRefreshing}
-        style={styles.container}
-        data={getListingsApi.data}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <ListCard
-            additionalCardStyles={styles.card}
-            item={item}
-            onPress={() => navigation.navigate("ListingsDetails", { item })}
-          />
-        )}
-        ItemSeparatorComponent={() => <ListItemSeperator />}
-      />
+      {
+        <FlatList
+          onRefresh={() => {
+            setIsRefreshing(true);
+            getListings();
+            setIsRefreshing(false);
+          }}
+          refreshing={isRefreshing}
+          style={styles.container}
+          data={getListingsApi.data}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <ListCard
+              additionalCardStyles={styles.card}
+              item={item}
+              onPress={() => navigation.navigate("ListingsDetails", { item })}
+            />
+          )}
+          ItemSeparatorComponent={() => <ListItemSeperator />}
+        />
+      }
     </Screen>
   );
 };

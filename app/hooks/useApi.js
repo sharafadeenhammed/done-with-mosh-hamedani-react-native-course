@@ -1,6 +1,7 @@
 import { useState } from "react";
 const useApi = (apiCall) => {
   const [data, setData] = useState();
+  const [isData, setIsData] = useState(false);
   const [isLodading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
