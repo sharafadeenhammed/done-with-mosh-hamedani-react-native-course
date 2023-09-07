@@ -27,7 +27,7 @@ const ListingsScreen = ({ navigation }) => {
   };
   return (
     <Screen>
-      {getListingsApi.isError && (
+      {getListingsApi.isError && !getListingsApi.isLodading ? (
         <View
           style={{
             ...styles.container,
@@ -51,12 +51,14 @@ const ListingsScreen = ({ navigation }) => {
             <AppButton bgColor={orange} title="retry" onPress={getListings} />
           </View>
         </View>
-      )}
+      ) : null}
       {/* <ActivityIndicator color={black} animating={isLoading} size={40} /> */}
-      {getListingsApi.isLodading && (
+      {getListingsApi.isLodading ? (
         <AppActivityIndicator animate={getListingsApi.isLodading} />
-      )}
-      {
+      ) : null}
+      {getListingsApi?.data?.length > 0 &&
+      getListingsApi.isLodading == false &&
+      getListingsApi.isError == false ? (
         <FlatList
           onRefresh={() => {
             setIsRefreshing(true);
@@ -76,7 +78,7 @@ const ListingsScreen = ({ navigation }) => {
           )}
           ItemSeparatorComponent={() => <ListItemSeperator />}
         />
-      }
+      ) : null}
     </Screen>
   );
 };

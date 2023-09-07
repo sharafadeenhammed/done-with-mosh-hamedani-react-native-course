@@ -10,7 +10,7 @@ const get = apiClient.get;
 apiClient.get = async (url, params, axiosConfig) => {
   const response = await get(url, params, axiosConfig);
   if (response.ok) {
-    cache.store(url, response.data);
+    const cacheStoreResponse = await cache.store(url, response.data);
     console.log("fetching data from server ok...");
     return response;
   }
@@ -19,6 +19,7 @@ apiClient.get = async (url, params, axiosConfig) => {
     console.log("...fetching from asyncStorage failed...");
     return response;
   }
+  console.log("async storage data :", data);
   return { ok: true, data };
 };
 
