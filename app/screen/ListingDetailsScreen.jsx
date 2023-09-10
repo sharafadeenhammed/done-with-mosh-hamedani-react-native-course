@@ -1,8 +1,8 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Image } from "react-native-expo-image-cache";
 
 import { green, mediumDark } from "../config/colors";
 import AppText from "../components/AppText";
-
 import ListItem from "../components/ListItem";
 
 import mosh from "../assets/list_images/mosh.jpg";
@@ -18,7 +18,11 @@ export default function ListingDetailsScreen({ route }) {
   return (
     <Screen screenAdditionalStyles={styles.container}>
       <View>
-        <Image style={styles.image} source={uri} />
+        <Image
+          uri={item.images[0]?.url || require("../assets/no-photo.jpg")}
+          preview={item.images[0]?.thumbnail}
+          style={styles.image}
+        />
         <View style={styles.detailsContainer}>
           <AppText style={styles.title} text={item.title} />
           <AppText style={styles.price} text={`$${item.price}`} />

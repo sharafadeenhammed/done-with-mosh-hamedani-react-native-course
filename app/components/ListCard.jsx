@@ -1,9 +1,5 @@
-import {
-  View,
-  Image,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { Image } from "react-native-expo-image-cache";
 import AppText from "./AppText";
 import { green, white } from "../config/colors";
 
@@ -14,7 +10,12 @@ export default function ListCard({ item, additionalCardStyles, onPress }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={[styles.cardContainer, additionalCardStyles]}>
-        <Image source={uri} style={styles.image} />
+        <Image source={uri} />
+        <Image
+          uri={item.images[0]?.url || require("../assets/no-photo.jpg")}
+          preview={item.images[0]?.thumbnail}
+          style={styles.image}
+        />
         <View style={styles.detailsContainer}>
           <AppText text={item.title} style={styles.mainTitle} />
           <AppText text={`$${item.price}`} style={styles.description}></AppText>
