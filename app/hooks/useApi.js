@@ -1,11 +1,12 @@
 import { useState } from "react";
-const useApi = (apiCall) => {
-  const [data, setData] = useState();
+
+const useApi = (apiCall, initialData = []) => {
+  const [data, setData] = useState(initialData);
   const [isLodading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const request = async (...args) => {
-    setData([]);
+    setData(initialData);
     setIsLoading(true);
     setIsError(false);
     const response = await apiCall(...args);

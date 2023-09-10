@@ -1,8 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import moment from "moment";
 
 const prefix = "cache";
-const expireryInMinites = 5;
+const expireryInMinites = 30;
 
 const store = async (key, value) => {
   try {
@@ -21,20 +20,23 @@ const store = async (key, value) => {
 };
 
 const isExpired = (date) => {
-  const now = moment(Date.now());
-  const storedTime = moment(date);
-  return now.diff(storedTime, "minutes") > expireryInMinites;
+  // const now = moment(Date.now());
+  // const storedTime = moment(date);
+  const now = Date.now();
+  const timeElapsedInMinites = (now - date) / (60 * 1000);
+  console.log("time ellapsed in minites: ", timeElapsedInMinites);
+  return timeElapsedInMinites > expireryInMinites;
 };
 
 const get = async (key) => {
   try {
     const value = await AsyncStorage.getItem(prefix + key);
     const item = JSON.parse(value);
-    if (isExpired(item.timeStamp || 0)) {
+    if (isExpired(item.timeStamp)) {
       await AsyncStorage.removeItem(prefix + key);
       return null;
     }
-    return item;
+    return item.value;
   } catch (error) {
     console.log("get data from async Storage Error: ", error);
   }
