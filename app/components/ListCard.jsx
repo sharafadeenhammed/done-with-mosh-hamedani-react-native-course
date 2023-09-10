@@ -4,13 +4,9 @@ import AppText from "./AppText";
 import { green, white } from "../config/colors";
 
 export default function ListCard({ item, additionalCardStyles, onPress }) {
-  const uri = item?.images[0]?.url
-    ? { uri: item.images[0].url }
-    : require("../assets/no-photo.jpg");
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={[styles.cardContainer, additionalCardStyles]}>
-        <Image source={uri} />
         <Image
           uri={item.images[0]?.url || require("../assets/no-photo.jpg")}
           preview={item.images[0]?.thumbnail}

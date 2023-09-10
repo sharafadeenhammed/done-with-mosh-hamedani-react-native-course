@@ -12,9 +12,6 @@ export default function ListingDetailsScreen({ route }) {
   const {
     params: { item },
   } = route;
-  const uri = item?.images[0]?.url
-    ? { uri: item.images[0].url }
-    : require("../assets/no-photo.jpg");
   return (
     <Screen screenAdditionalStyles={styles.container}>
       <View>
