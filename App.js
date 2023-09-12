@@ -1,21 +1,23 @@
 import { StyleSheet } from "react-native";
-import { useDeviceOrientation } from "@react-native-community/hooks";
 
 import { NavigationContainer } from "@react-navigation/native";
 import AppNavigation from "./app/navigation/AppNavigation.js";
 import AuthNavigation from "./app/navigation/AuthNavigation.js";
 import navigationTheme from "./app/navigation/navigationTheme.js";
 import OfflineNotice from "./app/components/OfflineNotice";
+import AuthContext, { AuthContextProvider } from "./app/context/AuthContext.js";
+import { useContext } from "react";
 
 export default function App() {
+  // const { user } = useContext(AuthContext);
   return (
     <>
-      <OfflineNotice />
-      <NavigationContainer theme={navigationTheme}>
-        {/* <AppNavigation />
-         */}
-        <AuthNavigation />
-      </NavigationContainer>
+      <AuthContextProvider>
+        <OfflineNotice />
+        <NavigationContainer theme={navigationTheme}>
+          <AuthNavigation />
+        </NavigationContainer>
+      </AuthContextProvider>
     </>
   );
 }
