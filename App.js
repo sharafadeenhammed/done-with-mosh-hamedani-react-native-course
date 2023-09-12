@@ -17,12 +17,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigation from "./app/navigation/AuthNavigation.js";
 import AppNavigation from "./app/navigation/AppNavigation.js";
 import navigationTheme from "./app/navigation/navigationTheme.js";
+import OfflineNotice from "./app/components/OfflineNotice.js";
 
 export default function App() {
   return (
-    <NavigationContainer theme={navigationTheme}>
-      <AppNavigation />
-    </NavigationContainer>
+    <>
+      <OfflineNotice />
+      <NavigationContainer theme={navigationTheme}>
+        <AppNavigation />
+      </NavigationContainer>
+    </>
   );
 }
 

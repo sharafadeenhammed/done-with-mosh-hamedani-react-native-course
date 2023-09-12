@@ -9,7 +9,7 @@ export default function ListCard({ item, additionalCardStyles, onPress }) {
       <View style={[styles.cardContainer, additionalCardStyles]}>
         <Image
           uri={item.images[0]?.url || require("../assets/no-photo.jpg")}
-          preview={item.images[0]?.thumbnail}
+          preview={item.images[0]?.thumbnailUrl}
           style={styles.image}
         />
         <View style={styles.detailsContainer}>
