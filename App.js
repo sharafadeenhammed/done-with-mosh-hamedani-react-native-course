@@ -3,6 +3,7 @@ import { useDeviceOrientation } from "@react-native-community/hooks";
 
 import { NavigationContainer } from "@react-navigation/native";
 import AppNavigation from "./app/navigation/AppNavigation.js";
+import AuthNavigation from "./app/navigation/AuthNavigation.js";
 import navigationTheme from "./app/navigation/navigationTheme.js";
 import OfflineNotice from "./app/components/OfflineNotice";
 
@@ -11,7 +12,9 @@ export default function App() {
     <>
       <OfflineNotice />
       <NavigationContainer theme={navigationTheme}>
-        <AppNavigation />
+        {/* <AppNavigation />
+         */}
+        <AuthNavigation />
       </NavigationContainer>
     </>
   );

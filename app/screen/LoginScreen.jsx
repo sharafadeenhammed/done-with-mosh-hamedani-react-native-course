@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { StyleSheet, Image, View } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -8,21 +8,29 @@ import Screen from "../components/Screen";
 import { blue, dark, green } from "../config/colors";
 import AppButton from "../components/AppButton";
 import FalshMessage from "../components/FlashMessage";
+import authApi from "../api/authApi";
 
 const validationScehma = Yup.object().shape({
   email: Yup.string().trim().required().email().label("Email"),
   password: Yup.string().required().min(6).label("Password"),
 });
 const LoginScreen = () => {
+  const [isError, setIsError] = useState(false);
   return (
     <Screen screenAdditionalStyles={styles.container}>
+      {isError && (
+        <FalshMessage message="Invalid email or password" type="error" />
+      )}
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require("../assets/logo-red.png")} />
       </View>
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => {
-          console.log("field value:  \n", values);
+        onSubmit={async (values) => {
+          setIsError(false);
+          const response = await authApi.login(values.email, values.password);
+          if (!response.ok) setIsError(true);
+          console.log(response.data, "\n");
         }}
         validationSchema={validationScehma}
       >
