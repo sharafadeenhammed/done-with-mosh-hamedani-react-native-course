@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Platform } from "react-native";
+import { Text, StyleSheet } from "react-native";
 
 export default function AppText({ onPress, text, style }) {
   return (
@@ -11,6 +11,5 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontWeight: "400",
-    // fontFamily: Platform.OS == "android" ? "notoserif" : "normal",
   },
 });

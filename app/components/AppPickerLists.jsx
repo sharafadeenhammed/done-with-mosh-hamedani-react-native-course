@@ -1,5 +1,4 @@
 import { FlatList, View, StyleSheet, Modal } from "react-native";
-import ListItemSeperator from "./ListItemSeperator";
 import PickerItem from "./PickerItem";
 import AppText from "./AppText";
 import { blue, green } from "../config/colors";

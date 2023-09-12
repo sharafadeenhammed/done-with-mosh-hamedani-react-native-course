@@ -3,7 +3,6 @@ import {
   ImageBackground,
   View,
   Image,
-  Text,
   StyleSheet,
   StatusBar,
 } from "react-native";
@@ -20,12 +19,10 @@ function WelcomeScreen({ navigation }) {
       source={BackgroundImage}
       blurRadius={4}
     >
-      {/* //header component mounted */}
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={logo} />
         <AppText style={styles.tagLine} text="Sell Want You Don't Need" />
       </View>
-      {/* // register and login button view mountex */}
       <View style={styles.buttonContainer}>
         <AppButton
           title="login"

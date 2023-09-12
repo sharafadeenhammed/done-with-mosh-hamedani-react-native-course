@@ -1,6 +1,5 @@
-import { dark, mediumDark, veryLightGray } from "../config/colors";
+import { mediumDark, veryLightGray } from "../config/colors";
 import AppText from "./AppText";
-import Icon from "./Icon";
 import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 

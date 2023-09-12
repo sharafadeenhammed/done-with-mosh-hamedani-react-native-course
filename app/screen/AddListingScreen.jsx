@@ -5,7 +5,7 @@ import AppTextInput from "../components/AppTextInput";
 import AppPicker from "../components/AppPicker";
 import AppPickerList from "../components/AppPickerLists";
 import { Alert, StyleSheet } from "react-native";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import * as imagePicker from "expo-image-picker";
 
 import ScroolScreen from "../components/ScroolScreen";

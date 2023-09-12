@@ -1,4 +1,4 @@
-import { mediumDark, veryLightGray } from "../config/colors";
+import { mediumDark } from "../config/colors";
 import AppText from "./AppText";
 import Icon from "./Icon";
 import { TouchableOpacity, StyleSheet } from "react-native";

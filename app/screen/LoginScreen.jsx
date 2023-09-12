@@ -5,9 +5,8 @@ import * as Yup from "yup";
 
 import AppTextInput from "../components/AppTextInput";
 import Screen from "../components/Screen";
-import { blue, dark, green, veryLightBlue } from "../config/colors";
+import { blue, dark, green } from "../config/colors";
 import AppButton from "../components/AppButton";
-import AppText from "../components/AppText";
 import FalshMessage from "../components/FlashMessage";
 
 const validationScehma = Yup.object().shape({

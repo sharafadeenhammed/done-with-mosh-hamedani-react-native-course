@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { dangerColor, darkBg, white } from "../config/colors";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { darkBg, white } from "../config/colors";
 
 AppButton.defaultProps = {
   color: darkBg,
