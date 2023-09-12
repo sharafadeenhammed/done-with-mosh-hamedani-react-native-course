@@ -6,7 +6,6 @@ import AuthContext from "../context/AuthContext";
 
 const Navigator = () => {
   const { user } = useContext(AuthContext);
-  console.log("log from Navigator: ", user);
   return user?.userId ? <AppNavigation /> : <AuthNavigation />;
 };
 

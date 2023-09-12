@@ -1,9 +1,7 @@
 import { StyleSheet } from "react-native";
 
-import { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
-import AuthNavigation from "./app/navigation/AuthNavigation.js";
 import navigationTheme from "./app/navigation/navigationTheme.js";
 import OfflineNotice from "./app/components/OfflineNotice";
 import { AuthContextProvider } from "./app/context/AuthContext.js";
@@ -15,7 +13,6 @@ export default function App() {
       <AuthContextProvider>
         <OfflineNotice />
         <NavigationContainer theme={navigationTheme}>
-          {/* <AuthNavigation /> */}
           <Navigator />
         </NavigationContainer>
       </AuthContextProvider>
