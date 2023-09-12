@@ -10,7 +10,7 @@ import {
   veryLightGray,
   veryLightRed,
 } from "../config/colors";
-import listingsApi from "../api/listings";
+import listingsApi from "../api/listingsApi";
 import AppText from "../components/AppText";
 import AppButton from "../components/AppButton";
 import AppActivityIndicator from "../components/animations/ActivityIndicator";

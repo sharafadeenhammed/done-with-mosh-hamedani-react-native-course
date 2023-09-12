@@ -12,7 +12,7 @@ import ScroolScreen from "../components/ScroolScreen";
 import AppButton from "../components/AppButton";
 import ImagePickerList from "../components/imagepicker/ImagePickerList";
 import useLocation from "../hooks/useLocation";
-import listingApi from "../api/listings";
+import listingApi from "../api/listingsApi";
 
 import {
   blue,
