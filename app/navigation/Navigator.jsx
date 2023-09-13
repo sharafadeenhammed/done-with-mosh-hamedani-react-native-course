@@ -1,22 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Image, StyleSheet } from "react-native";
 
 import AuthNavigation from "./AuthNavigation";
 import AppNavigation from "./AppNavigation";
-import AuthContext from "../context/AuthContext";
-import token from "../utility/AuthStorage";
+import useAuth from "../hooks/useAuth";
 
 const Navigator = () => {
+  const auth = useAuth();
   const [isAppReady, setIsAppReady] = useState(false);
   const getUserDataFromSecureStorage = async () => {
-    const userData = await token.get();
-    setUser(userData);
+    await auth.restoreToken();
     setIsAppReady(true);
   };
   useEffect(() => {
     getUserDataFromSecureStorage();
   }, []);
-  const { user, setUser } = useContext(AuthContext);
   if (!isAppReady)
     return (
       <View style={style.imageContainer}>
@@ -27,7 +25,11 @@ const Navigator = () => {
         />
       </View>
     );
-  return user?.userId && isAppReady ? <AppNavigation /> : <AuthNavigation />;
+  return auth.user?.userId && isAppReady ? (
+    <AppNavigation />
+  ) : (
+    <AuthNavigation />
+  );
 };
 const style = StyleSheet.create({
   imageContainer: {
