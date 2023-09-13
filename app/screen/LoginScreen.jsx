@@ -1,8 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { StyleSheet, Image, View } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import jwtDecode from "jwt-decode";
 
 import AppTextInput from "../components/AppTextInput";
 import Screen from "../components/Screen";
@@ -10,28 +9,23 @@ import { blue, dark, green } from "../config/colors";
 import AppButton from "../components/AppButton";
 import FalshMessage from "../components/FlashMessage";
 import authApi from "../api/authApi";
-import AuthContext from "../context/AuthContext";
-import token from "../utility/AuthStorage";
+import useAuth from "../hooks/useAuth";
 
 const validationScehma = Yup.object().shape({
   email: Yup.string().trim().required().email().label("Email").trim(),
   password: Yup.string().required().min(6).label("Password"),
 });
 const LoginScreen = () => {
-  const { setUser } = useContext(AuthContext);
   const [isError, setIsError] = useState(false);
+  const auth = useAuth();
   const handleLogin = async (values) => {
     setIsError(false);
     const response = await authApi.login(values.email, values.password);
     // check for a succesful request
     if (!response.ok) return setIsError(true);
 
-    // decode token and store
-    const decodedJwtToken = jwtDecode(response.data);
-    setUser(decodedJwtToken);
-
-    // set user data to secure store
-    await token.store(decodedJwtToken);
+    // authorize/login user locally
+    auth.login(response.data);
   };
   return (
     <Screen screenAdditionalStyles={styles.container}>
