@@ -9,11 +9,10 @@ import {
   yellow,
 } from "../config/colors";
 import { FlatList } from "react-native-gesture-handler";
-import { useState, useContext } from "react";
 import ListItemSeperator from "../components/ListItemSeperator";
 import Icon from "../components/Icon";
-import AuthContext from "../context/AuthContext";
-import token from "../utility/AuthStorage";
+import useAuth from "../hooks/useAuth";
+
 const data = [
   {
     id: 1,
@@ -30,23 +29,18 @@ const data = [
   },
 ];
 const AccountScreen = ({ navigation }) => {
-  const [items, setItems] = useState(data);
-  const { user, setUser } = useContext(AuthContext);
-  const logout = async () => {
-    setUser({});
-    token.remove();
-  };
+  const auth = useAuth();
   return (
     <Screen screenAdditionalStyles={styles.container}>
       <ListItem
         addiotionalListStyle={styles.list}
-        title={user.name}
-        description={user.email}
+        title={auth.user.name}
+        description={auth.user.email}
         image={require("../assets/list_images/mosh.jpg")}
       />
       <FlatList
         style={styles.flatList}
-        data={items}
+        data={data}
         ItemSeparatorComponent={() => (
           <ListItemSeperator additionalSeperatorStyles={styles.seperator} />
         )}
@@ -67,7 +61,7 @@ const AccountScreen = ({ navigation }) => {
       <ListItem
         addiotionalListStyle={styles.list}
         title="logout"
-        handlePress={logout}
+        handlePress={() => auth.logOut()}
         icon={() => <Icon name="logout" backgroundColor={yellow} />}
       />
     </Screen>
