@@ -11,6 +11,7 @@ import AppButton from "../components/AppButton";
 import FalshMessage from "../components/FlashMessage";
 import authApi from "../api/authApi";
 import AuthContext from "../context/AuthContext";
+import token from "../utility/token";
 
 const validationScehma = Yup.object().shape({
   email: Yup.string().trim().required().email().label("Email").trim(),
@@ -19,6 +20,19 @@ const validationScehma = Yup.object().shape({
 const LoginScreen = () => {
   const { setUser } = useContext(AuthContext);
   const [isError, setIsError] = useState(false);
+  const handleLogin = async (values) => {
+    setIsError(false);
+    const response = await authApi.login(values.email, values.password);
+    // check for a succesful request
+    if (!response.ok) return setIsError(true);
+
+    // decode token and store
+    const decodedJwtToken = jwtDecode(response.data);
+    setUser(decodedJwtToken);
+
+    // set user data to secure store
+    await token.store(decodedJwtToken);
+  };
   return (
     <Screen screenAdditionalStyles={styles.container}>
       <View style={styles.logoContainer}>
@@ -29,16 +43,7 @@ const LoginScreen = () => {
       )}
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={async (values) => {
-          setIsError(false);
-          const response = await authApi.login(values.email, values.password);
-          // check for a succesful request
-          if (!response.ok) return setIsError(true);
-
-          // decode token and store
-          const decodedJwtToken = jwtDecode(response.data);
-          setUser(decodedJwtToken);
-        }}
+        onSubmit={(values) => handleLogin(values)}
         validationSchema={validationScehma}
       >
         {({ handleChange, handleSubmit, errors, touched, setFieldTouched }) => {

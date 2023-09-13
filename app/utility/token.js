@@ -3,7 +3,7 @@ import * as SecureStore from "expo-secure-store";
 const name = "token";
 const store = async (token) => {
   try {
-    await SecureStore.setItemAsync(JSON.stringify(token));
+    await SecureStore.setItemAsync(name, JSON.stringify(token));
   } catch (error) {
     console.log("failed to store token to secure store: ", error);
   }
@@ -11,7 +11,7 @@ const store = async (token) => {
 
 const get = async () => {
   try {
-    return await SecureStore.getItemAsync(name);
+    return JSON.parse(await SecureStore.getItemAsync(name));
   } catch (error) {
     console.log("failed to retrive data from secure store: ", error);
   }
@@ -23,4 +23,10 @@ const remove = async () => {
   } catch (error) {
     console.log("error removing dat from secure store: ", error);
   }
+};
+
+export default {
+  get,
+  remove,
+  store,
 };
