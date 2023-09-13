@@ -7,7 +7,7 @@ export default useAuth = () => {
   const { user, setUser } = useContext(AuthContext);
   const login = async (authToken) => {
     const decodedToken = jwtDecode(authToken);
-    await AuthStorage.store(decodedToken);
+    await AuthStorage.store(authToken);
     setUser(decodedToken);
   };
 
@@ -18,7 +18,8 @@ export default useAuth = () => {
 
   const restoreToken = async () => {
     const userData = await AuthStorage.get();
-    setUser(userData);
+    if (userData) return setUser(jwtDecode(userData));
+    setUser({});
   };
   return { user, login, logOut, restoreToken };
 };
