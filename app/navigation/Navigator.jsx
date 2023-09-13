@@ -4,7 +4,7 @@ import { View, Image, StyleSheet } from "react-native";
 import AuthNavigation from "./AuthNavigation";
 import AppNavigation from "./AppNavigation";
 import AuthContext from "../context/AuthContext";
-import token from "../utility/token";
+import token from "../utility/AuthStorage";
 
 const Navigator = () => {
   const [isAppReady, setIsAppReady] = useState(false);

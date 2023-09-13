@@ -13,7 +13,7 @@ import { useState, useContext } from "react";
 import ListItemSeperator from "../components/ListItemSeperator";
 import Icon from "../components/Icon";
 import AuthContext from "../context/AuthContext";
-import token from "../utility/token";
+import token from "../utility/AuthStorage";
 const data = [
   {
     id: 1,

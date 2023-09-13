@@ -11,7 +11,7 @@ import AppButton from "../components/AppButton";
 import FalshMessage from "../components/FlashMessage";
 import authApi from "../api/authApi";
 import AuthContext from "../context/AuthContext";
-import token from "../utility/token";
+import token from "../utility/AuthStorage";
 
 const validationScehma = Yup.object().shape({
   email: Yup.string().trim().required().email().label("Email").trim(),
