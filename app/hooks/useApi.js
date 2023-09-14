@@ -11,7 +11,7 @@ const useApi = (apiCall, initialData = []) => {
     setIsError(false);
     const response = await apiCall(...args);
     setIsLoading(false);
-    if (!response.ok) return setIsError(true);
+    if (!response.ok) setIsError(true);
     setData(response.data);
   };
   return { data, isLodading, isError, request };

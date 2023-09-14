@@ -6,6 +6,7 @@ import AuthStorage from "../utility/AuthStorage";
 export default useAuth = () => {
   const { user, setUser } = useContext(AuthContext);
   const login = async (authToken) => {
+    if (!authToken) return;
     const decodedToken = jwtDecode(authToken);
     await AuthStorage.store(authToken);
     setUser(decodedToken);

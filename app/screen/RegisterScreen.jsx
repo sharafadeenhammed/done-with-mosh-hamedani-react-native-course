@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Image, View } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -8,23 +8,46 @@ import Screen from "../components/Screen";
 import { blue, dark, green } from "../config/colors";
 import AppButton from "../components/AppButton";
 import FalshMessage from "../components/FlashMessage";
+import authApi from "../api/authApi";
+import useApi from "../hooks/useApi";
+import useAuth from "../hooks/useAuth";
 
 const validationScehma = Yup.object().shape({
   name: Yup.string().trim().required().min(1).label("Name"),
   email: Yup.string().trim().required().email().label("Email"),
   password: Yup.string().required().min(6).label("Password"),
 });
+
 const RegisterScreen = () => {
+  const auth = useAuth();
+  const [errorMessage, setErrorMessage] = useState("");
+  const registerApi = useApi(authApi.register, "");
+  const loginApi = useApi(authApi.login, "");
+
+  const handleSubmit = async (values) => {
+    await signUp(values);
+    if (registerApi.isError)
+      return setErrorMessage(
+        registerApi?.data?.error || "Error signing you up !"
+      );
+    await auth.login(registerApi.data.token);
+  };
+
+  const signUp = async (values) => {
+    setErrorMessage("");
+    await registerApi.request(values);
+    console.log(registerApi.data);
+  };
+
   return (
     <Screen screenAdditionalStyles={styles.container}>
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require("../assets/logo-red.png")} />
       </View>
+      {errorMessage && <FalshMessage message={errorMessage} type="error" />}
       <Formik
         initialValues={{ name: "", email: "", password: "" }}
-        onSubmit={(values) => {
-          console.log("field value:  \n", values);
-        }}
+        onSubmit={(values) => handleSubmit(values)}
         validationSchema={validationScehma}
       >
         {({ handleChange, handleSubmit, errors, touched, setFieldTouched }) => {
@@ -118,7 +141,6 @@ const styles = StyleSheet.create({
   button: {
     color: blue,
     marginHorizontal: 10,
-
     borderRadius: 10,
   },
 });

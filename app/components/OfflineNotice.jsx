@@ -24,12 +24,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
     zIndex: 1,
-    borderWidth: 1,
     height: 80,
-    borderColor: lightRed,
   },
   text: {
     color: red,
     fontSize: 20,
+    paddingTop: 3,
   },
 });
