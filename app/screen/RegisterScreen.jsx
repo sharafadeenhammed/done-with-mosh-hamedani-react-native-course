@@ -11,6 +11,7 @@ import FalshMessage from "../components/FlashMessage";
 import authApi from "../api/authApi";
 import useApi from "../hooks/useApi";
 import useAuth from "../hooks/useAuth";
+import ActivityIndicator from "../components/animations/ActivityIndicator";
 
 const validationScehma = Yup.object().shape({
   name: Yup.string().trim().required().min(1).label("Name"),
@@ -22,7 +23,6 @@ const RegisterScreen = () => {
   const auth = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
   const registerApi = useApi(authApi.register, "");
-  const loginApi = useApi(authApi.login, "");
 
   const handleSubmit = async (values) => {
     await signUp(values);
@@ -44,7 +44,10 @@ const RegisterScreen = () => {
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require("../assets/logo-red.png")} />
       </View>
-      {errorMessage && <FalshMessage message={errorMessage} type="error" />}
+
+      {registerApi.isError && errorMessage ? (
+        <FalshMessage message={errorMessage} type="error" />
+      ) : null}
       <Formik
         initialValues={{ name: "", email: "", password: "" }}
         onSubmit={(values) => handleSubmit(values)}
@@ -102,12 +105,19 @@ const RegisterScreen = () => {
               {touched.password && (
                 <FalshMessage message={errors.password} type="error" />
               )}
-              <AppButton
-                title="Register"
-                bgColor={green}
-                onPress={handleSubmit}
-                buttonAdditionalStyles={styles.button}
-              />
+              {!registerApi.isLodading ? (
+                <AppButton
+                  title="Register"
+                  bgColor={green}
+                  onPress={handleSubmit}
+                  buttonAdditionalStyles={styles.button}
+                />
+              ) : (
+                <ActivityIndicator
+                  animate={registerApi.isLodading}
+                  style={styles.loading}
+                />
+              )}
             </>
           );
         }}
@@ -142,6 +152,10 @@ const styles = StyleSheet.create({
     color: blue,
     marginHorizontal: 10,
     borderRadius: 10,
+  },
+  loading: {
+    height: 100,
+    marginBottom: 10,
   },
 });
 export default RegisterScreen;
