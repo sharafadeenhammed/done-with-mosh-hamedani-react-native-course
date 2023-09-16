@@ -36,7 +36,6 @@ const RegisterScreen = () => {
   const signUp = async (values) => {
     setErrorMessage("");
     await registerApi.request(values);
-    console.log(registerApi.data);
   };
 
   return (
