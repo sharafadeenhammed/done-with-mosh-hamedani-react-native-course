@@ -5,10 +5,13 @@ import AccountNavigator from "./AccountNavigator";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AddListingIcon from "./AddListingIcon";
 import routes from "./routes";
+import useNotification from "../hooks/useNotification";
 
 const Tab = createBottomTabNavigator();
 
 export default () => {
+  useNotification();
+
   return (
     <Tab.Navigator
       screenOptions={{

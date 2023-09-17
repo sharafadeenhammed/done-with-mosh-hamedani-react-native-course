@@ -6,13 +6,14 @@ import navigationTheme from "./app/navigation/navigationTheme.js";
 import OfflineNotice from "./app/components/OfflineNotice";
 import { AuthContextProvider } from "./app/context/AuthContext.js";
 import Navigator from "./app/navigation/Navigator.jsx";
+import { naviagtionRef } from "./app/navigation/rootNAvigator.js";
 
 export default function App() {
   return (
     <>
       <AuthContextProvider>
         <OfflineNotice />
-        <NavigationContainer theme={navigationTheme}>
+        <NavigationContainer ref={naviagtionRef} theme={navigationTheme}>
           <Navigator />
         </NavigationContainer>
       </AuthContextProvider>
