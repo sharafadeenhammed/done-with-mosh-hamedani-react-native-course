@@ -4,7 +4,7 @@ import cache from "../utility/cache";
 import AuthStorage from "../utility/AuthStorage";
 
 const apiClient = create({
-  baseURL: "http://192.168.209.85:9000",
+  baseURL: "https://rose-sore-cygnet.cyclic.cloud/",
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
